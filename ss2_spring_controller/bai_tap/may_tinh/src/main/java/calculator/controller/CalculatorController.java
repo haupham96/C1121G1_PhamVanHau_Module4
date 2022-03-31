@@ -24,7 +24,13 @@ public class CalculatorController {
                 total = num1 + num2;
                 break;
             case "div":
-                total = num1 / num2;
+                if (num2 != 0) {
+                    total = num1 / num2;
+                } else {
+                    model.addAttribute("errors","can not divided by 0");
+                    return "calculator";
+                }
+
                 break;
             case "mul":
                 total = num1 * num2;

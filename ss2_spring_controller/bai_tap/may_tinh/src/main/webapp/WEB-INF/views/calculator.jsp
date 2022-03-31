@@ -21,5 +21,6 @@
     <button type="submit" name="cal" value="mul">MUL(X)</button>
 </form>
 <p>Result : ${total}</p>
+<p style="color: red">${errors}</p>
 </body>
 </html>
