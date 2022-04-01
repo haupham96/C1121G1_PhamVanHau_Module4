@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Product</title>
+    <style th:replace="/layout :: style"></style>
+    <th:block th:replace="/layout :: linkHead"></th:block>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+
+            <form method="post" th:object="${product}">
+                <div class="modal-header">
+                    <h4 class="modal-title text-primary">Thêm mới sản phẩm</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên Sản Phẩm</label>
+                        <input  type="text" class="form-control" th:field="*{tenSanPham}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá sản phẩm</label>
+                        <input  type="text" class="form-control" th:field="*{giaSanPham}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả sản phẩm</label>
+                        <input  type="text" class="form-control" th:field="*{moTa}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nhà sản xuất</label>
+                        <select class="form-control" th:field="*{nhaSanXuat}">
+                            <option th:each="nhaSX:${nhaSanXuat}" th:value="${nhaSX}" th:text="${nhaSX}" >
+
+                            </option>
+                        </select>
+                    </div>
+                <div class="modal-footer">
+                    <a href="/product" class="btn btn-dark">Huỷ</a>
+                    <input type="submit" class="btn btn-info" value="Thêm mới">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+<th:block th:replace="/layout :: script"></th:block>
+</html>

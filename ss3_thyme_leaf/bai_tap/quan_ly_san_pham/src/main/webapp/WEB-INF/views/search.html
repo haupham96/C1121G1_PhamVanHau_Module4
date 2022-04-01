@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style th:replace="/layout :: style"></style>
+    <th:block th:replace="/layout :: linkHead">
+    </th:block>
+</head>
+<body>
+<div class="container-fluid-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Tìm kiếm Sản Phẩm</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="/product" class="btn btn-success"><i
+                                class="material-icons">&#xE147;</i> <span>Trở về trang sản phẩm</span></a>
+                    </div>
+                </div>
+            </div>
+            <table id="example" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Giá Sản Phẩm</th>
+                    <th>Mô Tả</th>
+                    <th>Nhà Sản Xuất</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="prod,loop : ${listProduct}">
+                    <td th:text="${loop.count}"></td>
+                    <td th:text="${prod.tenSanPham}"></td>
+                    <td th:text="${prod.giaSanPham}"></td>
+                    <td th:text="${prod.moTa}"></td>
+                    <td th:text="${prod.nhaSanXuat}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+<th:block th:replace="/layout :: script">
+</th:block>
+</html>
