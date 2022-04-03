@@ -62,5 +62,6 @@ public class Controller {
         model.addAttribute("phuongTien", phuongTien);
 
         return "to-khai-y-te";
+//        return "success";
     }
 }
