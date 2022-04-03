@@ -2,9 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Product</title>
+    <style th:replace="/layout :: style"></style>
+    <th:block th:replace="/layout :: linkHead"></th:block>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-7">
+            <a href="/product" class="btn btn-success"><i
+                    class="material-icons">&#xE147;</i> <span>Danh sách sản phẩm</span></a>
+        </div>
 
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <table border="1" class="table-primary col-6">
+            <tbody>
+            <tr>
+                <th class="table-primary">Tên sản phẩm</th>
+                <td class="table-white" th:text="${pro.tenSanPham}"></td>
+            </tr>
+            <tr>
+                <th class="table-primary">Giá sản phẩm</th>
+                <td class="table-white" th:text="${pro.giaSanPham}"></td>
+            </tr>
+            <tr>
+                <th class="table-primary">Mô tả</th>
+                <td class="table-white" th:text="${pro.moTa}"></td>
+            </tr>
+            <tr>
+                <th class="table-primary">Nhà sản xuất</th>
+                <td class="table-white" th:text="${pro.nhaSanXuat}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="col-3"></div>
+    </div>
+
+</div>
+
+
+<footer th:replace="/layout :: footer"></footer>
 </body>
+<th:block th:replace="/layout :: script"></th:block>
 </html>

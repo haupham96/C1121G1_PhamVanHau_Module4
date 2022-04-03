@@ -73,5 +73,11 @@ public class ProductController {
         model.addAttribute("listProduct", listProduct);
         return "list";
     }
-    
+
+    @GetMapping("/view/{id}")
+    public String viewProduct(@PathVariable Integer id,Model model){
+        Product product = productService.findById(id);
+        model.addAttribute("pro",product);
+        return "view";
+    }
 }

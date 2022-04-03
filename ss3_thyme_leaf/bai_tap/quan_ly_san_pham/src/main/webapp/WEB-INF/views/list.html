@@ -45,7 +45,7 @@
                 <tbody>
                     <tr th:each="prod,loop : ${listProduct}">
                         <td th:text="${loop.count}"></td>
-                        <td th:text="${prod.tenSanPham}"></td>
+                        <td><a class="text-decoration-none text-primary" th:href="@{/product/view/{id}(id=${prod.id})}" th:text="${prod.tenSanPham}"></a></td>
                         <td th:text="${prod.giaSanPham}"></td>
                         <td th:text="${prod.moTa}"></td>
                         <td th:text="${prod.nhaSanXuat}"></td>
@@ -54,7 +54,7 @@
                         </td>
                         <td>
 <!--                            <a href="#deleteEmployeeModal" data-toggle="modal" th:onclick="'javascript:sendProductInfo(\'' +  ${prod.id} + '\',\'' + ${prod.tenSanPham} + '\')'" >Delete</a>-->
-                            <a href="#deleteEmployeeModal" data-toggle="modal" th:onclick="'sendProductInfo(\''+${prod.id}+'\',\''+${prod.tenSanPham}+'\')'">Delete</a>
+                            <a class="btn btn-primary text-white" href="#deleteEmployeeModal" data-toggle="modal" th:onclick="'sendProductInfo(\''+${prod.id}+'\',\''+${prod.tenSanPham}+'\')'">Delete</a>
                         </td>
                     </tr>
                 </tbody>
