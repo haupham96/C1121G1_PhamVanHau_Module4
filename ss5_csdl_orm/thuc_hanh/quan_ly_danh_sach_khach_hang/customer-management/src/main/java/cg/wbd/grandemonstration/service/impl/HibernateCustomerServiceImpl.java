@@ -2,7 +2,6 @@ package cg.wbd.grandemonstration.service.impl;
 
 import cg.wbd.grandemonstration.model.Customer;
 import cg.wbd.grandemonstration.service.CustomerService;
-import com.sun.deploy.config.Config;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
