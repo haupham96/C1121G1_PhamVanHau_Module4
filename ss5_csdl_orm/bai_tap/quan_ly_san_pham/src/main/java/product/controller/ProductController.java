@@ -67,7 +67,6 @@ public class ProductController {
 
     @PostMapping("/delete")
     public String deleteProduct(@RequestParam Integer idDelete, Model model) {
-        System.out.println(idDelete);
         productService.deleteById(idDelete);
         List<Product> listProduct = productService.getAllProducts();
         model.addAttribute("listProduct", listProduct);

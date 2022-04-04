@@ -79,5 +79,4 @@ public class ProductRepository implements IProductRepository {
         BaseRepository.entityManager.remove(product);
         transaction.commit();
     }
-
 }
