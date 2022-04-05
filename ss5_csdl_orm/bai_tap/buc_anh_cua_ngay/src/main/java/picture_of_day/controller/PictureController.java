@@ -1,4 +1,4 @@
-package picture_of_day.repository.controller;
+package picture_of_day.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class PictureController {
     }
 
     @GetMapping("/like/{id}")
-    public String likePicture(@PathVariable Integer id,Model model){
+    public String likePicture(@PathVariable Integer id){
         FeedBack feedBack = service.findFeedbackById(id);
         feedBack.setLikes(feedBack.getLikes()+1);
         service.save(feedBack);
