@@ -81,6 +81,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
+        //set package model
         em.setPackagesToScan("com.codegym.cms.model");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

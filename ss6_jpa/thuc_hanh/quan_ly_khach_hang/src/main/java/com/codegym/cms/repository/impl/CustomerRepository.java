@@ -2,7 +2,6 @@ package com.codegym.cms.repository.impl;
 
 import com.codegym.cms.model.Customer;
 import com.codegym.cms.repository.ICustomerRepository;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

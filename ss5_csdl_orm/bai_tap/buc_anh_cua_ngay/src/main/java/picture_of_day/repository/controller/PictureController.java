@@ -1,4 +1,4 @@
-package picture_of_day.controller;
+package picture_of_day.repository.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
