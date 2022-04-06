@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +49,7 @@ public class BlogController {
 
     @PostMapping ("/create")
     public String createBlog(@ModelAttribute Blog blogObj, RedirectAttributes redirectAttributes){
+        blogObj.setDate(LocalDate.now().toString());
         iBlogService.save(blogObj);
         redirectAttributes.addFlashAttribute("message","create success");
         return "redirect:/blog";

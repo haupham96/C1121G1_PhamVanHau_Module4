@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class BlogService implements IBlogService {
 
     @Override
     public Page<Blog> findAllBlog(Pageable pageable) {
-        return blogRepository.findAll(pageable);
+        return blogRepository.findAllByOrderByDate(pageable);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class BlogService implements IBlogService {
 
     @Override
     public Page<Blog> findBlogByName(String keyword, Pageable pageable) {
-        return blogRepository.findAllByBlogNameContaining(keyword, pageable);
+        return blogRepository.findAllByBlogNameContainingOrderByDate(keyword, pageable);
     }
 
     @Override
