@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>Category</th>
+        <th>Author</th>
+        <th>Blog Name</th>
+        <th>Blog Description</th>
+        <th>Back</th>
+    </tr>
+    <tr th:each="blogObj,loop : ${blogList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${blogObj.category.name}">
+        </td>
+        <td th:text="${blogObj.author}"></a></td>
+        <td th:text="${blogObj.blogName}"></td>
+        <td th:text="${blogObj.blogDescription}"></td>
+        <td>
+            <a th:href="@{/blog}">Back</a>
+        </td>
+
+    </tr>
+</table>
+
+</body>
+</html>

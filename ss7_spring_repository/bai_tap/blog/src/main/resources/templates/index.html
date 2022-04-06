@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+<th:block th:if="${message}">
+    <p style="color: red" id="mess" th:text="${message}"></p>
+</th:block>
+<h1>List Blog</h1>
+<br>
+<a th:href="@{/blog/create}">create blog</a>
+<br>
+<form th:action="@{/blog}">
+    <input type="text" name="keyword">
+    <button>Search</button>
+</form>
+<br>
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>Category</th>
+        <th>Author</th>
+        <th>Blog Name</th>
+        <th>Blog Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="blogObj,loop : ${blogList}">
+        <td th:text="${loop.count}"></td>
+        <td>
+            <a th:href="@{/blog/category/{categoryId}(categoryId=${blogObj.category.id})}" th:text="${blogObj.category.name}"></a>
+        </td>
+        <td th:text="${blogObj.author}"></a></td>
+        <td><a th:href="@{/blog/view/{id}(id=${blogObj.id})}" th:text="${blogObj.blogName}"></a></td>
+        <td th:text="${blogObj.blogDescription}"></td>
+        <td>
+            <a th:href="@{/blog/edit/{id}(id=${blogObj.id})}">Edit</a>
+        </td>
+        <td>
+            <a th:href="@{/blog/delete/{id}(id=${blogObj.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+<br>
+<div>
+    <a th:href="@{/blog(page=${blogList.number -1})}" th:if="${blogList.hasPrevious()}">Previous</a>
+    <span th:text="${blogList.number + 1}"></span>|
+    <span th:text="${blogList.totalPages}"></span>
+    <a th:href="@{/blog(page=${blogList.number + 1})}" th:if="${blogList.hasNext()}">Next</a>
+</div>
+</body>
+<script>
+    function setTimeMessage() {
+        document.getElementById("mess").innerText = "";
+    }
+    setTimeout(setTimeMessage, 2000);
+</script>
+</html>
