@@ -96,6 +96,7 @@ public class BlogController {
     public String listBlogByCategory(@PathVariable Integer categoryId, Model model){
         List<Blog> blogList = iBlogService.findBlogByCategoryId(categoryId);
         model.addAttribute("blogList",blogList);
+        model.addAttribute("title",blogList.get(0).getCategory().getName());
         return "blog-category";
     }
 }
