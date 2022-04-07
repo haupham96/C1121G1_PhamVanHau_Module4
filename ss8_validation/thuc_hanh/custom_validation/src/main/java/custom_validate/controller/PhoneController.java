@@ -19,8 +19,8 @@ public class PhoneController {
     }
     @PostMapping("/")
     public String checkValidation (@Valid @ModelAttribute("phoneNumber")PhoneNumber phoneNumber, BindingResult bindingResult, Model model){
-        new PhoneNumber().validate(phoneNumber, bindingResult);
-        if (bindingResult.hasFieldErrors()){
+        new PhoneNumber().validate(phoneNumber,bindingResult);
+        if(bindingResult.hasFieldErrors()){
             return "/index";
         }
         else {

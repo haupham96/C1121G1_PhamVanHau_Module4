@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<h1>List User</h1>
+<br>
+<a href="/user/create">Create New User</a>
+<table border="1">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Date Of Birth</th>
+        <th>Email</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.phoneNumber}"></td>
+        <td th:text="${user.dateOfBirth}"></td>
+        <td th:text="${user.email}"></td>
+    </tr>
+</table>
+<br>
+<div>
+    <a th:if="${users.hasPrevious()}" th:href="@{/user(page=${users.number - 1})}">previous</a>
+    <span th:text="${users.number + 1}"></span> |
+    <span th:text="${users.totalPages}"></span>
+    <a th:if="${users.hasNext()}" th:href="@{/user(page=${users.number + 1})}">Next</a>
+</div>
+<p style="color: red" id="mess" th:if="${message}" th:text="${message}"></p>
+</body>
+<script>
+    function setTime(){
+        document.getElementById("mess").innerText="";
+    }
+    setTimeout(setTime,1000);
+</script>
+</html>
