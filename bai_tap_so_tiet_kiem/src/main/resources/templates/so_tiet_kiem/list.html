@@ -17,15 +17,15 @@
     <table>
         <tr>
             <th>Ngày min :</th>
-            <td><input type="date" name="startDay"></td>
+            <td><input type="date" name="startDay" th:value="${start}"></td>
         </tr>
         <tr>
             <th>Ngày max :</th>
-            <td><input type="date" name="endDay"></td>
+            <td><input type="date" name="endDay" th:value="${end}"></td>
         </tr>
         <tr>
             <th>Tên Khách hàng :</th>
-            <td><input type="text" name="searchName"></td>
+            <td><input type="text" name="searchName" th:value="${searchValue}"></td>
         </tr>
         <tr>
             <td></td>

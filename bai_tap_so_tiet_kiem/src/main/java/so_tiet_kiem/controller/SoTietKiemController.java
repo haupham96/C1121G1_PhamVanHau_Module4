@@ -95,10 +95,11 @@ public class SoTietKiemController {
     public String search(@RequestParam Optional<String> startDay, @RequestParam Optional<String> endDay
             , @RequestParam Optional<String> searchName, Model model) {
         List<SoTietKiem> soTietKiemList = null;
-        if (!startDay.isPresent() || !endDay.isPresent() || startDay.get().equals("") || endDay.get().equals("")) {
-            if(searchName.isPresent() && !(searchName.get().equals(""))){
+        if ((!startDay.isPresent() || startDay.get().equals(""))&& (!endDay.isPresent() &&  endDay.get().equals(""))) {
+            if (searchName.isPresent() && !(searchName.get().equals(""))) {
                 soTietKiemList = soTietKiemService.searchByName(searchName.get());
-                model.addAttribute("soTietKiemList",soTietKiemList);
+                model.addAttribute("searchValue",searchName.get());
+                model.addAttribute("soTietKiemList", soTietKiemList);
                 return "/so_tiet_kiem/list";
             } else {
                 return "redirect:/so-tiet-kiem";
@@ -109,27 +110,35 @@ public class SoTietKiemController {
             if (endDay.isPresent() && !(endDay.get().equals(""))) {
                 if (searchName.isPresent()) {
                     soTietKiemList = soTietKiemService.searchByAll(startDay.get(), endDay.get(), searchName.get());
+                    model.addAttribute("start",startDay.get());
+                    model.addAttribute("end",endDay.get());
+                    model.addAttribute("searchValue",searchName.get());
                     model.addAttribute("soTietKiemList", soTietKiemList);
                     return "/so_tiet_kiem/list";
                 } else {
                     soTietKiemList = soTietKiemService.searchByDayStartAndDayEnd(startDay.get(), endDay.get());
-                    model.addAttribute("soTietKiemList",soTietKiemList);
+                    model.addAttribute("start",startDay.get());
+                    model.addAttribute("end",endDay.get());
+                    model.addAttribute("soTietKiemList", soTietKiemList);
                     return "/so_tiet_kiem/list";
                 }
             } else {
-                if(searchName.isPresent()){
-                    soTietKiemList = soTietKiemService.searchByDateAndName(startDay.get(),searchName.get());
-                    model.addAttribute("soTietKiemList",soTietKiemList);
+                if (searchName.isPresent()) {
+                    soTietKiemList = soTietKiemService.searchByDateAndName(startDay.get(), searchName.get());
+                    model.addAttribute("start",startDay.get());
+                    model.addAttribute("searchValue",searchName.get());
+                    model.addAttribute("soTietKiemList", soTietKiemList);
                     return "/so_tiet_kiem/list";
                 } else {
                     soTietKiemList = soTietKiemService.searchByDate(startDay.get());
-                    model.addAttribute("soTietKiemList",soTietKiemList);
+                    model.addAttribute("start",startDay.get());
+                    model.addAttribute("soTietKiemList", soTietKiemList);
                     return "/so_tiet_kiem/list";
                 }
 
             }
         }
-
+        
         return "redirect:/so-tiet-kiem";
     }
 
