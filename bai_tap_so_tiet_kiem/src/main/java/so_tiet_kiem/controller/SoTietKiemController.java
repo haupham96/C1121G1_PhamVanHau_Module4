@@ -15,10 +15,7 @@ import so_tiet_kiem.model.SoTietKiem;
 import so_tiet_kiem.service.IKhachHangService;
 import so_tiet_kiem.service.ISoTietKiemService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/so-tiet-kiem")
@@ -108,7 +105,7 @@ public class SoTietKiemController {
 
         if (startDay.isPresent() && !(startDay.get().equals(""))) {
             if (endDay.isPresent() && !(endDay.get().equals(""))) {
-                if (searchName.isPresent()) {
+                if (searchName.isPresent()&& !searchName.get().equals("")) {
                     soTietKiemList = soTietKiemService.searchByAll(startDay.get(), endDay.get(), searchName.get());
                     model.addAttribute("start",startDay.get());
                     model.addAttribute("end",endDay.get());
@@ -117,6 +114,8 @@ public class SoTietKiemController {
                     return "/so_tiet_kiem/list";
                 } else {
                     soTietKiemList = soTietKiemService.searchByDayStartAndDayEnd(startDay.get(), endDay.get());
+                    List<SoTietKiem> test = soTietKiemService.searchBetween2Date(startDay.get(),endDay.get());
+
                     model.addAttribute("start",startDay.get());
                     model.addAttribute("end",endDay.get());
                     model.addAttribute("soTietKiemList", soTietKiemList);

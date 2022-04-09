@@ -118,4 +118,9 @@ public class SoTietKiemService implements ISoTietKiemService {
         }
         return result;
     }
+
+    @Override
+    public List<SoTietKiem> searchBetween2Date(String date1, String date2) {
+        return soTietKiemRepository.testSearchBy2Date(date1,date2);
+    }
 }

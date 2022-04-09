@@ -22,4 +22,6 @@ public interface ISoTietKiemService {
     List<SoTietKiem> searchByName(String key);
 
     List<SoTietKiem> searchByDateAndName(String date, String name);
+
+    List<SoTietKiem> searchBetween2Date(String date1, String date2);
 }
