@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo mới</title>
+</head>
+<body>
+<h1>Tạo mới khách hàng</h1>
+<br>
+<br>
+<form method="post" th:object="${khachHangDTO}">
+<table>
+    <tr>
+        <th>Họ Tên :</th>
+        <td><input type="text" th:field="*{tenKhachHang}"></td>
+        <td style="color: red" th:errors="*{tenKhachHang}"></td>
+    </tr>
+    <tr>
+        <td><a href="/khach-hang">Huỷ</a></td>
+        <td><input type="submit" value="Tạo mới"></td>
+    </tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete</title>
+</head>
+<body>
+<h1>Xoá khách sổ tiết kiệm này ?</h1>
+<form method="post">
+    <table border="1">
+        <tr>
+            <th>Mã Khách Hàng</th>
+            <td th:text="${soTietKiem.khachHang.id}"></td>
+        </tr>
+        <tr>
+            <th>Họ Tên Khách Hàng</th>
+            <td th:text="${soTietKiem.khachHang.tenKhachHang}"></td>
+        </tr>
+        <tr>
+            <th>Thời Gian Bắt Đầu</th>
+            <td th:text="${soTietKiem.thoiGianBatDauGui}"></td>
+        </tr>
+        <tr>
+            <th>Kỳ Hạn</th>
+            <td th:text="${soTietKiem.kyHan}"></td>
+        </tr>
+        <tr>
+            <th>Số tiền</th>
+            <td th:text="${soTietKiem.soTienGui}"></td>
+        </tr>
+        <tr>
+            <td><a href="/so-tiet-kiem">Huỷ</a></td>
+            <td><input type="submit" value="xác nhận"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

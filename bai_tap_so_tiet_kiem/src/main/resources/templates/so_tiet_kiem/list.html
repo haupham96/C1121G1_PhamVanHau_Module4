@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>STK</title>
+</head>
+<body>
+<h1>Danh mục Sổ tiết kiệm</h1>
+<br>
+<a href="/khach-hang">danh sách Khách hàng</a>
+<br>
+<a href="/so-tiet-kiem/create">Tạo mới Sổ tiết kiệm</a>
+<br>
+<br>
+<h1>Tìm kiếm :</h1>
+<form action="/so-tiet-kiem/search">
+    <table>
+        <tr>
+            <th>Ngày min :</th>
+            <td><input type="date" name="startDay"></td>
+        </tr>
+        <tr>
+            <th>Ngày max :</th>
+            <td><input type="date" name="endDay"></td>
+        </tr>
+        <tr>
+            <th>Tên Khách hàng :</th>
+            <td><input type="text" name="searchName"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Tìm kiếm"></td>
+        </tr>
+    </table>
+</form>
+<br>
+<br>
+<h1>Thông tin Chi Tiết :</h1>
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>Họ Tên Khách Hàng</th>
+        <th>Thời Gian Bắt Đầu</th>
+        <th>Kỳ Hạn</th>
+        <th>Số tiền</th>
+        <th>Sửa</th>
+        <th>Xoá</th>
+    </tr>
+    <tr th:each="soTietKiem , loop : ${soTietKiemList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${soTietKiem.khachHang.tenKhachHang}"></td>
+        <td th:text="${soTietKiem.thoiGianBatDauGui}"></td>
+        <td th:text="${soTietKiem.kyHan}"></td>
+        <td th:text="${soTietKiem.soTienGui}"></td>
+        <td><a th:href="@{/so-tiet-kiem/edit/{id}(id=${soTietKiem.id})}">Sửa</a></td>
+        <td><a th:href="@{/so-tiet-kiem/delete/{id}(id=${soTietKiem.id})}">Xoá</a></td>
+    </tr>
+</table>
+<p style="color: red" id="mess" th:if="${message}" th:text="${message}"></p>
+</body>
+<script>
+    function setTime() {
+        document.getElementById("mess").innerText = "";
+    }
+    setTimeout(setTime, 1000);
+</script>
+</html>
