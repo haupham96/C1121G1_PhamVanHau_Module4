@@ -95,7 +95,7 @@ public class SoTietKiemController {
     public String search(@RequestParam Optional<String> startDay, @RequestParam Optional<String> endDay
             , @RequestParam Optional<String> searchName, Model model) {
         List<SoTietKiem> soTietKiemList = null;
-        if ((!startDay.isPresent() || startDay.get().equals(""))&& (!endDay.isPresent() &&  endDay.get().equals(""))) {
+        if ((!startDay.isPresent() || startDay.get().equals(""))&& (!endDay.isPresent() ||  endDay.get().equals(""))) {
             if (searchName.isPresent() && !(searchName.get().equals(""))) {
                 soTietKiemList = soTietKiemService.searchByName(searchName.get());
                 model.addAttribute("searchValue",searchName.get());
@@ -138,7 +138,7 @@ public class SoTietKiemController {
 
             }
         }
-        
+
         return "redirect:/so-tiet-kiem";
     }
 
