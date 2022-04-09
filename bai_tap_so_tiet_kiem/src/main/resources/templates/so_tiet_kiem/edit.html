@@ -30,13 +30,14 @@
             <td style="color: red" th:errors="*{soTienGui}"></td>
         </tr>
         <tr>
-            <th>Khách Hàng :</th>
-            <td>
-                <select th:field="*{khachHang}">
-                    <option th:each="khachHang : ${khachHangList}" th:text="${khachHang.tenKhachHang}"
-                            th:value="${khachHang.id}"></option>
-                </select>
-            </td>
+            <th>Mã Khách Hàng :</th>
+            <td th:text="${soTietKiemDTO.khachHangDTO.id}"></td>
+            <td><input type="hidden" name="idKhachHangDTO" th:value="${soTietKiemDTO.khachHangDTO.id}"></td>
+        </tr>
+        <tr>
+            <th>Tên Khách Hàng :</th>
+            <td><input type="text" th:field="*{khachHangDTO.tenKhachHang}"></td>
+            <td style="color: red" th:errors="*{khachHangDTO.tenKhachHang}"></td>
         </tr>
         <tr>
             <td><a href="/so-tiet-kiem">Huỷ</a></td>

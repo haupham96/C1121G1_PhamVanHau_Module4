@@ -79,11 +79,14 @@ public class SoTietKiemService implements ISoTietKiemService {
     public List<SoTietKiem> searchByDate(String day1) {
         List<SoTietKiem> soTietKiemList = soTietKiemRepository.findAll();
         List<SoTietKiem> result = new ArrayList<>();
+
         for (SoTietKiem ls : soTietKiemList) {
+
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date1 = LocalDate.parse(day1, fmt);
             String day2 = ls.getThoiGianBatDauGui();
             LocalDate date2 = LocalDate.parse(day2, fmt);
+
             if (date1.equals(date2)) {
                 result.add(ls);
             }
@@ -94,5 +97,25 @@ public class SoTietKiemService implements ISoTietKiemService {
     @Override
     public List<SoTietKiem> searchByName(String key) {
         return soTietKiemRepository.findAllByKhachHang_TenKhachHangContaining(key);
+    }
+
+    @Override
+    public List<SoTietKiem> searchByDateAndName(String date, String name) {
+        List<SoTietKiem> soTietKiemList = soTietKiemRepository.findAll();
+        List<SoTietKiem> result = new ArrayList<>();
+        for (SoTietKiem ls : soTietKiemList) {
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date1 = LocalDate.parse(date, fmt);
+
+            String day = ls.getThoiGianBatDauGui();
+            LocalDate date2 = LocalDate.parse(day, fmt);
+
+            if (date1.equals(date2)) {
+                if (ls.getKhachHang().getTenKhachHang().contains(name)) {
+                    result.add(ls);
+                }
+            }
+        }
+        return result;
     }
 }

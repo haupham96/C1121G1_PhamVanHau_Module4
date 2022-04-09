@@ -61,7 +61,8 @@ public class SoTietKiemController {
         KhachHang khachHang = new KhachHang();
 
         BeanUtils.copyProperties(soTietKiemDTO, soTietKiem);
-        BeanUtils.copyProperties(soTietKiemDTO.getKhachHangDTO(),khachHang);
+        BeanUtils.copyProperties(soTietKiemDTO.getKhachHangDTO(), khachHang);
+
         Set<SoTietKiem> soTietKiemSet = new HashSet<>();
         soTietKiemSet.add(soTietKiem);
 
@@ -95,43 +96,71 @@ public class SoTietKiemController {
             , @RequestParam Optional<String> searchName, Model model) {
         List<SoTietKiem> soTietKiemList = null;
         if (!startDay.isPresent() || !endDay.isPresent() || startDay.get().equals("") || endDay.get().equals("")) {
-            return "index";
+            if(searchName.isPresent() && !(searchName.get().equals(""))){
+                soTietKiemList = soTietKiemService.searchByName(searchName.get());
+                model.addAttribute("soTietKiemList",soTietKiemList);
+                return "/so_tiet_kiem/list";
+            } else {
+                return "redirect:/so-tiet-kiem";
+            }
         }
 
-        if (startDay.isPresent()) {
-            if (endDay.isPresent()) {
+        if (startDay.isPresent() && !(startDay.get().equals(""))) {
+            if (endDay.isPresent() && !(endDay.get().equals(""))) {
                 if (searchName.isPresent()) {
                     soTietKiemList = soTietKiemService.searchByAll(startDay.get(), endDay.get(), searchName.get());
                     model.addAttribute("soTietKiemList", soTietKiemList);
+                    return "/so_tiet_kiem/list";
                 } else {
                     soTietKiemList = soTietKiemService.searchByDayStartAndDayEnd(startDay.get(), endDay.get());
+                    model.addAttribute("soTietKiemList",soTietKiemList);
+                    return "/so_tiet_kiem/list";
                 }
             } else {
-                soTietKiemList = soTietKiemService.searchByDate(startDay.get());
+                if(searchName.isPresent()){
+                    soTietKiemList = soTietKiemService.searchByDateAndName(startDay.get(),searchName.get());
+                    model.addAttribute("soTietKiemList",soTietKiemList);
+                    return "/so_tiet_kiem/list";
+                } else {
+                    soTietKiemList = soTietKiemService.searchByDate(startDay.get());
+                    model.addAttribute("soTietKiemList",soTietKiemList);
+                    return "/so_tiet_kiem/list";
+                }
+
             }
         }
-        return "/so_tiet_kiem/list";
+
+        return "redirect:/so-tiet-kiem";
     }
 
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Integer id, Model model) {
         SoTietKiemDTO soTietKiemDTO = new SoTietKiemDTO();
         SoTietKiem soTietKiem = soTietKiemService.findById(id);
-        BeanUtils.copyProperties(soTietKiem, soTietKiemDTO);
+        KhachHangDTO khachHangDTO = new KhachHangDTO();
 
+        BeanUtils.copyProperties(soTietKiem.getKhachHang(), khachHangDTO);
+        BeanUtils.copyProperties(soTietKiem, soTietKiemDTO);
+        soTietKiemDTO.setKhachHangDTO(khachHangDTO);
         model.addAttribute("soTietKiemDTO", soTietKiemDTO);
 
         return "/so_tiet_kiem/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String editSo(@Validated @ModelAttribute SoTietKiemDTO soTietKiemDTO, BindingResult bindingResult, @PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+    public String editSo(@Validated @ModelAttribute SoTietKiemDTO soTietKiemDTO, BindingResult bindingResult, @PathVariable Integer id, @RequestParam Integer idKhachHangDTO, Model model, RedirectAttributes redirectAttributes) {
         SoTietKiem soTietKiem = new SoTietKiem();
+        KhachHang khachHang = new KhachHang();
         soTietKiemDTO.validate(soTietKiemDTO, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return "/so_tiet_kiem/edit";
         }
         BeanUtils.copyProperties(soTietKiemDTO, soTietKiem);
+        BeanUtils.copyProperties(soTietKiemDTO.getKhachHangDTO(), khachHang);
+
+        khachHang.setId(idKhachHangDTO);
+        soTietKiem.setKhachHang(khachHang);
+
         soTietKiemService.save(soTietKiem);
         redirectAttributes.addFlashAttribute("message", "thành công");
         return "redirect:/so-tiet-kiem";

@@ -20,4 +20,6 @@ public interface ISoTietKiemService {
     List<SoTietKiem> searchByDate(String day1);
 
     List<SoTietKiem> searchByName(String key);
+
+    List<SoTietKiem> searchByDateAndName(String date, String name);
 }

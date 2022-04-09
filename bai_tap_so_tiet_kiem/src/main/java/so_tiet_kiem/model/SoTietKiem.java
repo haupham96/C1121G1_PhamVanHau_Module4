@@ -16,7 +16,7 @@ public class SoTietKiem {
 
     private String soTienGui ;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "khach_hang_id",referencedColumnName = "id")
     private KhachHang khachHang ;
 
