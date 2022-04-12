@@ -51,7 +51,7 @@ public class BookController {
     }
 
     @GetMapping("/return")
-    public String returnForm(Model model){
+    public String returnForm(){
         return "return-book";
     }
 
