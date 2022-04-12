@@ -13,7 +13,7 @@ public class KhachHang {
 
     private String tenKhachHang;
 
-    @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "khachHang",cascade = CascadeType.PERSIST)
     Set<SoTietKiem> soTietKiems;
 
     public KhachHang() {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Books</title>
+</head>
+<body>
+<center>
+    <p id="mess" style="color: red" th:text="${message}"></p>
+    <h1 style="color: red">List BOOKS</h1>
+    <h1><a href="/book/return" style="text-decoration: none;color: blue">RETURN BOOK</a></h1>
+    <table border="1" style="border-collapse: collapse ;border: 1px solid black">
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Borrow</th>
+        </tr>
+        <tr th:each="book,loop : ${books}">
+            <td th:text="${loop.count}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.quantity}"></td>
+            <td>
+                <a th:if="${book.quantity>0}" th:href="@{/book/borrow/{id}(id=${book.id})}"
+                   style="text-decoration: none;color: blue">Borrow</a>
+                <a th:if="${book.quantity<=0}" th:href="@{/error}" style="text-decoration: none;color: blue">Borrow</a>
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+<script>
+    function showMessage() {
+        document.getElementById("mess").innerText = "";
+    }
+    setTimeout(showMessage, 1500);
+</script>
+</html>

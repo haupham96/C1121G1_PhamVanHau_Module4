@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Return Books</title>
+</head>
+<body>
+
+<center>
+    <h1><a style="color: red" href="/book">List Book</a></h1>
+    <form method="post" action="">
+        <lable>Input Borrow Code To Return :</lable>
+        <input type="text" name="code">
+        <input type="submit" value="Return">
+    </form>
+    <p style="color: red" id="mess"></p>
+</center>
+</body>
+<script>
+    function showMess() {
+        document.getElementById("mess").innerText="";
+    }
+    setTimeout(showMess,1500);
+</script>
+</html>
