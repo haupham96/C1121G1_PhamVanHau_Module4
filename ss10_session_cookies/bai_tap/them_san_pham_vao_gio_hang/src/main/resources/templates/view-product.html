@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <th:block th:replace="/layout::linkHead"></th:block>
+</head>
+<body>
+<center>
+    <h1><a href="/shop">Back To Shop</a></h1>
+    <h1>Product Details</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <img width="150px" height="150px" class="card-img-top" th:src="@{${productObj.image}}"
+                         alt="Card image cap">
+                    <div class="card-body d-flex justify-content-center">
+                        <div>
+                            <a class="text-center text-decoration-none" href="#" th:text="${productObj.name}">Product Name</a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-center">
+                            <del>Old Price : 20 000 000</del>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-center" th:text="${' New Price : ' + productObj.price}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                Màn hình	6.7 inch, OLED, Super Retina XDR, 2778 x 1284 Pixels
+                <br>
+                Camera sau	12.0 MP + 12.0 MP + 12.0 MP
+                <br>
+                Camera Selfie	12.0 MP
+                <br>
+                RAM	6 GB
+                <br>
+                Bộ nhớ trong	128 GB
+                <br>
+                CPU	Apple A15 Bionic
+                <br>
+                GPU	Apple GPU 5 nhân
+                <br>
+                Dung lượng pin	4352 mAh
+                <br>
+                Thẻ sim	2 - 1 eSIM, 1 Nano SIM
+                <br>
+                Hệ điều hành	iOS 15
+                <br>
+                Xuất xứ	Trung Quốc
+                <br>
+                Thời gian ra mắt	09/2021
+            </div>
+        </div>
+    </div>
+</center>
+</body>
+<th:block th:replace="/layout::script"></th:block>
+</html>

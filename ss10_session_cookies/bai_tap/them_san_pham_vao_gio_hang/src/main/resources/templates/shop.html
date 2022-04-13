@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <th:block th:replace="/layout :: linkHead"></th:block>
+</head>
+<body>
+<p>
+    <a class="btn btn-primary" href="/shopping-cart">Your cart</a>
+</p>
+<!--<table border="1">-->
+<!--    <tr>-->
+<!--        <td>Name</td>-->
+<!--        <td>Price</td>-->
+<!--        <td>Add To Cart</td>-->
+<!--    </tr>-->
+<!--    <th:block th:each="product:${products}">-->
+<!--        <tr>-->
+<!--            <td th:text="${product.name}"></td>-->
+<!--            <td th:text="${product.price}"></td>-->
+<!--            <td><a th:href="@{/add/__${product.id}__(action='list')}">Add To Cart</a></td>-->
+<!--        </tr>-->
+<!--    </th:block>-->
+<!--</table>-->
+<div class="container">
+    <div class="row">
+        <div class="col-3" width="200px" height="200px" th:each="productObj : ${products}">
+            <div class="card">
+                <img width="150px" height="150px" class="card-img-top" th:src="@{${productObj.image}}"
+                     alt="Card image cap">
+                <div class="card-body d-flex justify-content-center">
+                    <div>
+                        <a class="text-center text-decoration-none"  th:href="@{/view/__${productObj.id}__}" th:text="${productObj.name}"></a>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-center">
+                        <del>Old Price : 20 000 000</del>
+                    </p>
+                </div>
+                <div>
+                    <p class="text-center" th:text="${' New Price : ' + productObj.price}"></p>
+                </div>
+                <div class="text-center">
+                    <a class="btn btn-danger" th:href="@{/add/__${productObj.id}__(action='list')}" >Add To Cart</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<th:block th:replace="/layout :: script"></th:block>
+</html>
