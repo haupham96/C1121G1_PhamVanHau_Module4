@@ -38,8 +38,8 @@
                 </tr>
                 <tr>
                     <td class="text-danger">Total</td>
-                    <td></td>
-                    <td th:text="${cart.countTotalPayment()}"></td>
+                    <td colspan="2" th:text="${cart.countTotalPayment()}"></td>
+                    <td><a class="btn btn-warning" th:href="@{/pay}">Pay</a></td>
                 </tr>
             </table>
         </form>

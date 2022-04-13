@@ -77,4 +77,8 @@ public class Cart {
         return payment;
     }
 
+    public void clear() {
+        products.clear();
+    }
+
 }

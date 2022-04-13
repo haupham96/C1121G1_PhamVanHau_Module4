@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import product_cart.model.Cart;
 import product_cart.model.Product;
 import product_cart.service.IProductService;
@@ -75,6 +76,13 @@ public class ProductController {
         }
         cart.removeProduct(product.get());
         return "redirect:/shopping-cart";
+    }
+
+    @GetMapping("/pay")
+    public String payCart(@ModelAttribute Cart cart, RedirectAttributes redirectAttributes){
+        cart.clear();
+        redirectAttributes.addFlashAttribute("message","pay success");
+        return "redirect:/shop";
     }
 
 

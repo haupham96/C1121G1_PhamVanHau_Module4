@@ -23,6 +23,7 @@
 <!--        </tr>-->
 <!--    </th:block>-->
 <!--</table>-->
+<p class="text-center" style="color: red" id="mess" th:text="${message}"></p>
 <div class="container">
     <div class="row">
         <div class="col-3" width="200px" height="200px" th:each="productObj : ${products}">
@@ -51,5 +52,11 @@
     </div>
 </div>
 </body>
+<script>
+    function showMess() {
+        document.getElementById("mess").innerText="";
+    }
+    setTimeout(showMess,1500);
+</script>
 <th:block th:replace="/layout :: script"></th:block>
 </html>
