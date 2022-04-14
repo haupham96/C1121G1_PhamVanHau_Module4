@@ -10,4 +10,8 @@ public interface IBlogService {
     List<Blog> findByCategoryName(String keyword);
 
     Blog findById(Integer id);
+
+    void save(Blog blog);
+
+    void deleteBlogById(Integer id);
 }

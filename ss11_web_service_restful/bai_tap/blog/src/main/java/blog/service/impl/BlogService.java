@@ -28,4 +28,14 @@ public class BlogService implements IBlogService {
     public Blog findById(Integer id) {
         return iBlogRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void save(Blog blog) {
+        iBlogRepository.save(blog);
+    }
+
+    @Override
+    public void deleteBlogById(Integer id) {
+        iBlogRepository.deleteById(id);
+    }
 }
