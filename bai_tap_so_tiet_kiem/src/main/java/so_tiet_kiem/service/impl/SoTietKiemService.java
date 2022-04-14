@@ -96,7 +96,7 @@ public class SoTietKiemService implements ISoTietKiemService {
 
     @Override
     public List<SoTietKiem> searchByName(String key) {
-        return soTietKiemRepository.findAllByKhachHang_TenKhachHangContaining(key);
+        return soTietKiemRepository.findAllByKhachHang_TenKhachHangLike("%"+key+"%");
     }
 
     @Override
