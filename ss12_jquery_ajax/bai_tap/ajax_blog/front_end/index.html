@@ -39,6 +39,8 @@
             url: 'http://localhost:8080/blog',
             success: function (result) {
                 resultSever = result.content;
+                console.log(resultSever);
+
                 let content = "";
                 for (let i = 0; i < loadPage * 3; i++) {
                     content += `
