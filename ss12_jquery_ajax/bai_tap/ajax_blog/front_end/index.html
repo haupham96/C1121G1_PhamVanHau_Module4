@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Blog</h1>
+<input type="text" id="searchName">
+<button id="searchBtn">Search</button>
+<hr>
+<table border="1" style="border-collapse: collapse;border: 1px solid black ;padding: 5px">
+    <thead>
+    <th>No.</th>
+    <th>Author</th>
+    <th>Blog Name</th>
+    <th>Category</th>
+    <th>Description</th>
+    </thead>
+    <tbody id="tableBody">
+
+    </tbody>
+</table>
+<br>
+<button id="loadBtn">Load More</button>
+</body>
+<script>
+    let loadPage = 1;
+    let presentIndex=0;
+    let resultSever;
+    $(document).ready(function () {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: 'GET',
+            url: 'http://localhost:8080/blog',
+            success: function (result) {
+                resultSever = result.content;
+                let content = "";
+                for (let i = 0; i < loadPage * 3; i++) {
+                    content += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${resultSever[i].author}</td>
+                    <td>${resultSever[i].name}</td>
+                    <td>${resultSever[i].category.name}</td>
+                    <td>${resultSever[i].description}</td>
+                </tr>
+                `;
+                }
+                $("#tableBody").html(content);
+            }
+        });
+
+        $("#loadBtn").click(function () {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: 'GET',
+                url: 'http://localhost:8080/blog',
+                success: function (result) {
+                    let contentLoad = ``;
+                    resultSever = result.content;
+                    console.log(presentIndex);
+                    for (let i = loadPage * 3; i >= presentIndex && i < loadPage * 3 + 3 && i < resultSever.length; i++) {
+
+                        contentLoad +=
+                            `<tr>
+                    <td>${i + 1}</td>
+                    <td>${resultSever[i].author}</td>
+                    <td>${resultSever[i].name}</td>
+                    <td>${resultSever[i].category.name}</td>
+                    <td>${resultSever[i].description}</td>
+                </tr>`;
+
+                    }
+                    $("#tableBody").append(contentLoad);
+                    loadPage++;
+                }
+            });
+
+        });
+
+        $("#searchBtn").click(function () {
+            let keyword = $("#searchName").val();
+
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: 'GET',
+                url: "http://localhost:8080/blog/search?searchName=" + keyword,
+                success: function (result) {
+                    let tableBodyHtml = ``;
+                    resultSever = result.content;
+
+                    for (let i = 0; i < resultSever.length; i++) {
+                        tableBodyHtml += `
+                    <tr>
+                        <td>${(i + 1)}</td>
+                        <td>${resultSever[i].author}</td>
+                        <td>${resultSever[i].name}</td>
+                        <td>${resultSever[i].category.name}</td>
+                        <td>${resultSever[i].description}</td>
+                    </tr>
+                    `;
+                        presentIndex = i;
+                    }
+                    // console.log(tableBodyHtml);
+                    $("#tableBody").html(tableBodyHtml);
+                }
+
+            })
+        });
+    });
+
+
+</script>
+</html>
