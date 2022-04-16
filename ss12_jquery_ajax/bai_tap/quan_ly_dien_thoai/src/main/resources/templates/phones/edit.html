@@ -48,6 +48,7 @@
             url: "/smartphones/"+idVal,
             data: JSON.stringify(editSmartPhone),
             success: function(resultSuccess){
+                window.location = "/smartphones/list";
                 alert("Dang ky thanh cong!");
             },
             error: function(resultError) {
