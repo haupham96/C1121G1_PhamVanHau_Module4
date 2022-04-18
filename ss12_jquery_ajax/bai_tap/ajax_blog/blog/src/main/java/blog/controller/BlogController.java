@@ -26,20 +26,26 @@ public class BlogController {
     ICategoryService iCategoryService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Blog>> listBlog( Pageable pageable) {
-        Page<Blog> blogs = iBlogService.findAll(pageable);
-        return new ResponseEntity<>(blogs, HttpStatus.OK);
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<Page<Blog>> searchByAuthor( Pageable pageable, @RequestParam Optional<String> searchName) {
-        if (searchName.isPresent()) {
-            Page<Blog> blogs = this.iBlogService.searchByAuthor(searchName.get(), pageable);
+    public ResponseEntity<Page<Blog>> listBlog(@PageableDefault(value = 3) Pageable pageable, Optional<String> keyword) {
+        if (!keyword.isPresent() || keyword.get().equals("")) {
+            Page<Blog> blogs = iBlogService.findAll(pageable);
             return new ResponseEntity<>(blogs, HttpStatus.OK);
         }
-        Page<Blog> blogs = iBlogService.findAll(pageable);
+
+        Page<Blog> blogs = iBlogService.searchByAuthor(keyword.get(), pageable);
         return new ResponseEntity<>(blogs, HttpStatus.OK);
+
     }
+
+//    @GetMapping("/search")
+//    public ResponseEntity<Page<Blog>> searchByAuthor(@PageableDefault(value = 3) Pageable pageable, @RequestParam Optional<String> searchName) {
+//        if (searchName.isPresent()) {
+//            Page<Blog> blogs = this.iBlogService.searchByAuthor(searchName.get(), pageable);
+//            return new ResponseEntity<>(blogs, HttpStatus.OK);
+//        }
+//        Page<Blog> blogs = iBlogService.findAll(pageable);
+//        return new ResponseEntity<>(blogs, HttpStatus.OK);
+//    }
 
     @GetMapping("/findByCategory")
     public ResponseEntity<List<Blog>> findBlogByCategory(@RequestParam(required = false) String keyword) {
