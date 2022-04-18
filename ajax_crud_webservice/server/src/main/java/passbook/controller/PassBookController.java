@@ -37,10 +37,12 @@ public class PassBookController {
     public ResponseEntity<List<FieldError>> createPassBook(@Validated @RequestBody PassBookDTO passBookDTO, BindingResult bindingResult) {
         List<FieldError> err = null;
         passBookDTO.validate(passBookDTO, bindingResult);
+
         if (bindingResult.hasFieldErrors()) {
             err = bindingResult.getFieldErrors();
             return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
         }
+
         PassBook passBook = new PassBook();
         Customer customer = new Customer();
 

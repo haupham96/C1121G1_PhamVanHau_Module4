@@ -3,11 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <title>List PassBook</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+    <script src="../static/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                Add new Passbook
+            </button>
+        </div>
 
+    </div>
+    <div class="row">
+        <div>
+            <p id="testP"></p>
+            <p id="testP2"></p>
+
+            <form action="#">
+                <input type="text" id="testInput" required>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+        <table class="table">
+            <thead class="table-dark">
+            <th>No.</th>
+            <th>Time Start</th>
+            <th>Period</th>
+            <th>Money</th>
+            <th>Customer Name</th>
+            <th>Action</th>
+            </thead>
+            <tbody id="tableBody">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form action="#">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Time Start </label>
+                        <input type="date" class="form-control" id="timeStartAdd" required>
+                        <div class="valid-feedback">Valid</div>
+                        <div class="invalid-feedback">Not Blank</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Period</label>
+                        <input type="text" class="form-control" id="periodAdd" required>
+                        <small th:></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Money</label>
+                        <input type="text" class="form-control" id="moneyAdd">
+                        <small class="error"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" class="form-control" id="customerNameAdd">
+                        <small class="error"></small>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeBtnAdd">Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="addBtn">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteInfor"></p>
+                <p id="deleteInforNameCustomer"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-<th:block th:replace="~{layout::script}"></th:block>
+
+<script>
+
+    $("#addBtn").click(function () {
+
+        let timeStartAdd = $("#timeStartAdd").val();
+        let periodAdd = $("#periodAdd").val();
+        let moneyAdd = $("#moneyAdd").val();
+        let customerNameAdd = $("#customerNameAdd").val();
+        let newPassBook = {
+            timeStart: timeStartAdd,
+            period: periodAdd,
+            money: moneyAdd,
+            customer: {
+                name: customerNameAdd
+            }
+        };
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "http://localhost:8080/passbook/create",
+            data: JSON.stringify(newPassBook),
+            success: function (resultSuccess) {
+                alert("success");
+                location.reload();
+            },
+            error: function (resultError) {
+                // $("#closeBtnAdd").click();
+                // alert("Fail to add");
+            }
+        });
+    });
+
+    $(document).ready(function (event) {
+        $("#testInput").val("abc");
+        let a = $("#testP").text();
+        $("#testP2").text(a);
+        let contentBody = ``;
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: "http://localhost:8080/passbook",
+            success: function (resultSuccess) {
+                resultSV = resultSuccess.content;
+                for (let i = 0; i < resultSV.length; i++) {
+                    contentBody += `
+                    <tr>
+                        <td>${(i + 1)}</td>
+                        <td>${resultSV[i].timeStart}</td>
+                        <td>${resultSV[i].period}</td>
+                        <td>${resultSV[i].money}</td>
+                        <td>${resultSV[i].customer.name}</td>
+                        <td>
+                            <a class="btn btn-danger" href="#">Edit</a>
+                            <button type="button" class="btn btn-warning"
+                            onclick="doDelete('${resultSV[i].id}','${resultSV[i].customer.name}')" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                               Delete
+                            </button>
+                        </td>
+                    </tr>
+                    `;
+                    $("#tableBody").html(contentBody);
+                }
+            }
+        });
+    });
+
+    function doDelete(id, customerName) {
+        document.getElementById("deleteInfor").innerText = "ID : " + id;
+        document.getElementById("deleteInforNameCustomer").innerText = "Customer Name : " + customerName;
+    }
+</script>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+</head>
+<body>
+<a href="?lang=en">English</a> || <a href="?lang=vi">Tiếng Việt</a>
+<h1 th:text="#{title}">List</h1>
+<table>
+    <tr>
+        <th th:text="#{content.count}">STT</th>
+        <th th:text="#{content.name}">Name</th>
+        <th th:text="#{content.birthday}">Birthday</th>
+    </tr>
+    <tr th:each="customer,loop:${customers}">
+       <td th:text="${loop.count}"></td>
+       <td th:text="${customer.name}"></td>
+       <td th:text="${customer.birthday}"></td>
+    </tr>
+</table>
+</body>
+</html>
