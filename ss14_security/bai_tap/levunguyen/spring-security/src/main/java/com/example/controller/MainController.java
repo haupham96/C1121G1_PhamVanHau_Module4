@@ -33,7 +33,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(Model model) {
+    public String loginPage() {
 
         return "loginPage";
     }
@@ -48,6 +48,7 @@ public class MainController {
     public String userInfo(Model model, Principal principal) {
 
         // Sau khi user login thanh cong se co principal
+
         String userName = principal.getName();
 
         System.out.println("User Name: " + userName);

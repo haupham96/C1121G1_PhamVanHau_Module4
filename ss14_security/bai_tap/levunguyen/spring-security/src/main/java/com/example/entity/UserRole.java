@@ -25,6 +25,7 @@ public class UserRole {
 
     @ManyToOne
     @JoinColumn(name = "Role_Id", nullable = false)
+
     private AppRole appRole;
 
     public Long getId() {

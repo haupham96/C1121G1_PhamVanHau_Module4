@@ -41,6 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<UserRole> userRoles = this.userRoleRepository.findByAppUser(appUser);
 
         List<GrantedAuthority> grantList = new ArrayList<>();
+
         if (userRoles != null) {
             for (UserRole userRole : userRoles) {
                 GrantedAuthority authority = new SimpleGrantedAuthority(userRole.getAppRole().getRoleName());
