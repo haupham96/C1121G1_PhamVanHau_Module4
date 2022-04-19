@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_AMDIN')");
 
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/err-access");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/err-login");
 
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/hau_security")
