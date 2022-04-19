@@ -18,6 +18,8 @@ import passbook.service.IPassBookService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -28,19 +30,19 @@ public class PassBookController {
     IPassBookService iPassBookService;
 
     @GetMapping("")
-    public ResponseEntity<Page<PassBook>> listPassBook(@PageableDefault(value = 2) Pageable pageable) {
+    public ResponseEntity<Page<PassBook>> listPassBook(@PageableDefault(value = 20) Pageable pageable) {
         Page<PassBook> listPassBook = this.iPassBookService.findAll(pageable);
         return new ResponseEntity<>(listPassBook, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<List<FieldError>> createPassBook(@Validated @RequestBody PassBookDTO passBookDTO, BindingResult bindingResult) {
-        List<FieldError> err = null;
+    public ResponseEntity<Map<String,String>> createPassBook(@Validated @RequestBody PassBookDTO passBookDTO, BindingResult bindingResult) {
+        Map<String,String> err = null;
         passBookDTO.validate(passBookDTO, bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
-            err = bindingResult.getFieldErrors();
-            return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+            err = bindingResult.getFieldErrors().stream().collect(Collectors.toMap(e->e.getField(),e->e.getDefaultMessage()));
+            return new ResponseEntity<>(err, HttpStatus.OK);
         }
 
         PassBook passBook = new PassBook();
@@ -55,10 +57,10 @@ public class PassBookController {
         return new ResponseEntity<>(err, HttpStatus.OK);
     }
 
-    @PutMapping ("/update")
-    public ResponseEntity<List<FieldError>> updatePassBook(@Validated @RequestBody PassBookDTO passBookDTO , BindingResult bindingResult){
+    @PutMapping("/update")
+    public ResponseEntity<List<FieldError>> updatePassBook(@Validated @RequestBody PassBookDTO passBookDTO, BindingResult bindingResult) {
         List<FieldError> err = null;
-        passBookDTO.validate(passBookDTO,bindingResult);
+        passBookDTO.validate(passBookDTO, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             err = bindingResult.getFieldErrors();
             return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
@@ -74,13 +76,12 @@ public class PassBookController {
         passBook.setId(passBookDTO.getId());
 
         this.iPassBookService.save(passBook);
-
-        return new ResponseEntity<>(null,HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deletePassBook(@PathVariable Integer id){
-        if(this.iPassBookService.findById(id)==null){
+    public ResponseEntity<Void> deletePassBook(@PathVariable Integer id) {
+        if (this.iPassBookService.findById(id) == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         this.iPassBookService.deleteById(id);

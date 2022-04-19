@@ -19,7 +19,7 @@ public class PassBookDTO implements Validator {
     private String period ;
 
     @NotBlank
-    @Pattern(regexp = "(^$|^[0-9]+$)")
+    @Pattern(regexp = "(^$|^[0-9]+$)",message = "number please")
     private String money ;
 
     @Valid

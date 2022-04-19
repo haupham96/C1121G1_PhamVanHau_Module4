@@ -60,7 +60,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="addModalLabel">Add new PassBook</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -68,24 +68,23 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Time Start </label>
-                        <input type="date" class="form-control" id="timeStartAdd" required>
-                        <div class="valid-feedback">Valid</div>
-                        <div class="invalid-feedback">Not Blank</div>
+                        <input type="date" class="form-control" id="timeStartAdd">
+                        <p class="form-helper text-danger" id="timeStartAddError">a</p>
                     </div>
                     <div class="form-group">
                         <label>Period</label>
-                        <input type="text" class="form-control" id="periodAdd" required>
-                        <small th:></small>
+                        <input type="text" class="form-control" id="periodAdd">
+                        <p class="form-helper text-danger" id="periodAddError">a</p>
                     </div>
                     <div class="form-group">
                         <label>Money</label>
                         <input type="text" class="form-control" id="moneyAdd">
-                        <small class="error"></small>
+                        <p class="form-helper text-danger" id="moneyAddError">a</p>
                     </div>
                     <div class="form-group">
                         <label>Customer Name</label>
                         <input type="text" class="form-control" id="customerNameAdd">
-                        <small class="error"></small>
+                        <p class="form-helper text-danger" id="customerNameAddError">a</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeBtnAdd">Close
@@ -104,7 +103,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Delete Passbook</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -112,23 +111,77 @@
                 <p id="deleteInforNameCustomer"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelDeleteModalBtn">No
+                </button>
+                <button type="button" class="btn btn-primary" id="deleteModalBtn">Yes</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit PassBook</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form action="#">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Time Start </label>
+                        <input type="date" class="form-control" id="timeStartEdit">
+                        <p class="form-helper text-danger" id="timeStartEditError">a</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Period</label>
+                        <input type="text" class="form-control" id="periodEdit">
+                        <p class="form-helper text-danger" id="periodEditError">a</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Money</label>
+                        <input type="text" class="form-control" id="moneyEdit">
+                        <p class="form-helper text-danger" id="moneyEditError">a</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" class="form-control" id="customerNameEdit">
+                        <p class="form-helper text-danger" id="customerNameEditError">a</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeBtnEdit">Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="editBtn">Add</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 </body>
 
 <script>
+    let idDelete = 0;
+    let idEdit = 0;
+
+
+    function resetFieldErrorAddModal() {
+        $("#timeStartAddError").text("");
+        $("#periodAddError").text("");
+        $("#moneyAddError").text("");
+        $("#customerNameAddError").text("");
+    }
 
     $("#addBtn").click(function () {
+        resetFieldErrorAddModal();
 
         let timeStartAdd = $("#timeStartAdd").val();
         let periodAdd = $("#periodAdd").val();
         let moneyAdd = $("#moneyAdd").val();
         let customerNameAdd = $("#customerNameAdd").val();
-        let newPassBook = {
+        let passBookDTO = {
             timeStart: timeStartAdd,
             period: periodAdd,
             money: moneyAdd,
@@ -144,22 +197,35 @@
             },
             type: "POST",
             url: "http://localhost:8080/passbook/create",
-            data: JSON.stringify(newPassBook),
+            data: JSON.stringify(passBookDTO),
             success: function (resultSuccess) {
-                alert("success");
-                location.reload();
+                let error = new Map(Object.entries(resultSuccess));
+                console.log(error);
+                if (error.size !== 0) {
+                    for (let [key, value] of error.entries()) {
+                        if (key === "timeStart") {
+                            $("#timeStartAddError").text(value);
+                        } else if (key === "period") {
+                            $("#periodAddError").text(value);
+                        } else if (key === "money") {
+                            $("#moneyAddError").text(value);
+                        } else {
+                            $("#customerNameAddError").text(value);
+                        }
+                    }
+                } else {
+                    location.reload();
+                }
+
             },
             error: function (resultError) {
-                // $("#closeBtnAdd").click();
-                // alert("Fail to add");
+                $("#closeBtnAdd").click();
+                alert("Fail to add");
             }
         });
     });
 
     $(document).ready(function (event) {
-        $("#testInput").val("abc");
-        let a = $("#testP").text();
-        $("#testP2").text(a);
         let contentBody = ``;
         $.ajax({
             headers: {
@@ -179,7 +245,7 @@
                         <td>${resultSV[i].money}</td>
                         <td>${resultSV[i].customer.name}</td>
                         <td>
-                            <a class="btn btn-danger" href="#">Edit</a>
+                            <button type="button" onclick="sendIdEdit('${resultSV[i].id}')" class="btn btn-danger launchEditModalBtn" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                             <button type="button" class="btn btn-warning"
                             onclick="doDelete('${resultSV[i].id}','${resultSV[i].customer.name}')" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                Delete
@@ -191,11 +257,37 @@
                 }
             }
         });
+        // event.preventDefault();
     });
 
     function doDelete(id, customerName) {
+        idDelete = id;
         document.getElementById("deleteInfor").innerText = "ID : " + id;
         document.getElementById("deleteInforNameCustomer").innerText = "Customer Name : " + customerName;
+    }
+
+    $("#deleteModalBtn").click(function () {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "DELETE",
+            url: "http://localhost:8080/passbook/delete/" + idDelete,
+            success: function (resultSuccess) {
+                alert("Delete Success");
+                location.reload();
+            },
+            error: function (resultError) {
+                alert("fail to delete")
+            }
+        });
+    });
+
+    function sendIdEdit(id){
+        idEdit = id ;
+        console.log(idEdit +'id edit');
+        // do something
     }
 </script>
 </html>

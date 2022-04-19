@@ -12,7 +12,7 @@ public class CustomerDTO {
     private Integer id ;
 
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Z ]+$")
+    @Pattern(regexp = "^$|(^[a-zA-Z ]+$)")
     private String name ;
 
     Set<PassBook> passBooks ;
