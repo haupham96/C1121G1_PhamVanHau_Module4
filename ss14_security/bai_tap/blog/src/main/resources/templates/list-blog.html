@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Ok</title>
+</head>
+<body>
+<div>
+    <p style="color: red" th:text="${'hello: '+ userInfor}"></p>
+    <a style="text-decoration: none" href="/logout">LogOut</a>
+</div>
+<a href="/blog/create" style="text-decoration: none">Create New Blog</a>
+<p style="color: red" th:text="${message}" id="mess"></p>
+<table border="1" style="border-collapse: collapse ; border:  1px solid black">
+    <tr>
+        <th>No.</th>
+        <th>Blog Name</th>
+        <th>Author</th>
+        <th>User</th>
+        <th>Category</th>
+        <th>Detail</th>
+    </tr>
+    <tr th:each="blog,loop:${blogs}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${blog.name}"></td>
+        <td th:text="${blog.author}"></td>
+        <td th:text="${blog.account.userName}"></td>
+        <td th:text="${blog.category}"></td>
+        <td th:text="${blog.detail}"></td>
+    </tr>
+</table>
+</body>
+</html>
