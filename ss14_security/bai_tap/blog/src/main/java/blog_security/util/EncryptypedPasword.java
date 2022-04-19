@@ -13,7 +13,6 @@ public class EncryptypedPasword {
         String password = "123456";
 //        $2a$10$TPboposyptBZPE9SfA5Dm.G2XU6jS6vUh0EGYvGRi.mtQun4KsyWu
         String encrytedPassword = encrytePassword(password);
-
         System.out.println("Encryted Password: " + encrytedPassword);
     }
 }
