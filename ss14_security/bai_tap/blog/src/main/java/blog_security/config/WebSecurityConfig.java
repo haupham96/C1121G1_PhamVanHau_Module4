@@ -20,9 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     UserDetailsService userDetailsService;
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder ;
+        return bCryptPasswordEncoder;
     }
 
     @Autowired
@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/blogUser").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
 
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_AMDIN')");
+        http.authorizeRequests().antMatchers("/adminPage").access("hasRole('ROLE_ADMIN')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/err-login");
 
@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/blog");
 
         http.authorizeRequests().and().rememberMe().tokenRepository(this.persistentTokenRepository())
-                .tokenValiditySeconds(60*60);
+                .tokenValiditySeconds(60 * 60);
 
     }
 

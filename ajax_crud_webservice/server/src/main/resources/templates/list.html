@@ -245,19 +245,20 @@
                         <td>${resultSV[i].money}</td>
                         <td>${resultSV[i].customer.name}</td>
                         <td>
-                            <button type="button" onclick="sendIdEdit('${resultSV[i].id}')" class="btn btn-danger launchEditModalBtn" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                            <button type="button" data-customer-name="${resultSV[i].customer.name}" data-id="${resultSV[i].id}"  class="btn btn-danger launchEditModalBtn" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                             <button type="button" class="btn btn-warning"
                             onclick="doDelete('${resultSV[i].id}','${resultSV[i].customer.name}')" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                Delete
                             </button>
                         </td>
                     </tr>
-                    `;
+                   `;
                     $("#tableBody").html(contentBody);
                 }
             }
         });
         // event.preventDefault();
+        // onclick="sendIdEdit('${resultSV[i].id}')"
     });
 
     function doDelete(id, customerName) {
@@ -284,10 +285,10 @@
         });
     });
 
-    function sendIdEdit(id){
-        idEdit = id ;
-        console.log(idEdit +'id edit');
-        // do something
-    }
+    $(document).on('click',".launchEditModalBtn",function (){
+        let id = $(this).attr('data-id');
+        let customerName = $(this).attr('data-customer-name');
+        console.log(id + customerName);
+    })
 </script>
 </html>

@@ -41,4 +41,13 @@ public class MainController {
         model.addAttribute("blogs",blogs);
         return "list-blog";
     }
+
+    @GetMapping("/adminPage")
+    public String goAdminGo(Principal principal,Model model){
+        User admin = (User) ((Authentication)principal).getPrincipal();
+
+        String adminInfo = WebUtils.toString(admin);
+        model.addAttribute("adminInfo",adminInfo);
+        return "adminPage";
+    }
 }
