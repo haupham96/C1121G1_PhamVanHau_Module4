@@ -21,7 +21,6 @@ public class Service {
     @Column(columnDefinition = "int")
     private String area;
 
-    @Column(columnDefinition = "double")
     private String price;
 
     @Column(columnDefinition = "int")
@@ -31,7 +30,6 @@ public class Service {
 
     private String otherConvenience;
 
-    @Column(columnDefinition = "double")
     private String poolArea;
 
     @Column(columnDefinition = "int")

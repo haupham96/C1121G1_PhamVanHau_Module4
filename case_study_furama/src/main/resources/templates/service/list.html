@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Service</title>
+    <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+            integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <h1 class="text-primary">List Services</h1>
+    </div>
+    <div class="row">
+        <a class="btn btn-info col-2 text-light" th:href="@{/service/create/1}">Create New Villa</a>
+        <br>
+        <a class="btn btn-danger col-2 text-light" th:href="@{/service/create/2}">Create New House</a>
+        <br>
+        <a class="btn btn-warning col-2 text-light" th:href="@{/service/create/3}">Create New Room</a>
+    </div>
+    <br>
+    <div class="row">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:if="${services.hasPrevious()}"
+                   th:href="@{/service(page=${services.number - 1})}">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link text-dark" th:text="${services.number + 1}">1</a></li>
+            <li class="page-item"><a class="page-link text-dark" th:text="${services.totalPages}">3</a></li>
+            <li class="page-item">
+                <a class="page-link" th:if="${services.hasNext()}"
+                   th:href="@{/service(page=${services.number + 1})}">Next</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>No.</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Area</th>
+                <th>Price</th>
+                <th>Max Peoples</th>
+                <th>Room Standard</th>
+                <th>Other Conveniences</th>
+                <th>PoolArea</th>
+                <th>Foor</th>
+                <th>Rent Type</th>
+                <th>Service Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="service,loop:${services}">
+                <td th:text="${loop.count}"></td>
+                <td th:text="${service.serviceCode}"></td>
+                <td th:text="${service.name}"></td>
+                <td th:text="${service.area}"></td>
+                <td th:text="${service.price}"></td>
+                <td th:text="${service.maxPeople}"></td>
+                <td th:if="${service.standardRoom != '-1' && service.standardRoom != ''}" th:text="${service.standardRoom}"></td>
+                <td class="text-danger" th:if="${service.standardRoom == '-1' && service.standardRoom == ''}" th:text="${'Not Available'}"></td>
+                <td th:text="${service.otherConvenience}"></td>
+                <td class="text-danger" th:if="${service.poolArea == '-1' || service.poolArea == ''}"
+                    th:text="${'Not Available'}"></td>
+                <td th:if="${service.poolArea != '-1' && service.poolArea != ''}" th:text="${service.poolArea}"></td>
+                <td th:text="${service.floor}"></td>
+                <td th:text="${service.rentType.name}"></td>
+                <td th:text="${service.serviceType.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <h5 class="text-center text-danger" th:text="${message}" id="message"></h5>
+</div>
+</body>
+<script>
+    function showMessage() {
+        document.getElementById("message").innerText = "";
+    }
+
+    setTimeout(showMessage, 1500);
+</script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Service</title>
+    <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
+    <style th:replace="~{/layout::style}"></style>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+            integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <form method="post" th:object="${serviceDTO}">
+                <div class="modal-header" id="typeId" th:data-typeId="${serviceDTO.serviceType.id}">
+                    <h4 class="text-primary">Create new Customer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Service Code</label>
+                        <input type="text" class="form-control" th:field="*{serviceCode}">
+                        <p class="form-helper text-danger" th:errors="*{serviceCode}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Name</label>
+                        <input type="text" class="form-control" th:field="*{name}">
+                        <p class="form-helper text-danger" th:errors="*{name}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Area</label>
+                        <input type="text" class="form-control" th:field="*{area}">
+                        <p class="form-helper text-danger" th:errors="*{area}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="text" class="form-control" th:field="*{price}">
+                        <p class="form-helper text-danger" th:errors="*{price}"></p>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <label>Max People</label>
+                        <input type="text" class="form-control" th:field="*{maxPeople}">
+                        <p class="form-helper text-danger" th:errors="*{maxPeople}"></p>
+                    </div>
+                    <div class="form-group" id="roomStandard">
+                        <label>Room Standard</label>
+                        <input type="text" class="form-control" th:field="*{standardRoom}">
+                        <p class="form-helper text-danger" th:errors="*{standardRoom}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Other Convenience</label>
+                        <input type="text" class="form-control" th:field="*{otherConvenience}">
+                        <p class="form-helper text-danger" th:errors="*{otherConvenience}"></p>
+                    </div>
+                    <div class="form-group" id="poolArea" th:data-typeId="${serviceDTO.serviceType.id}">
+                        <label>Pool Area</label>
+                        <input type="text" class="form-control" th:field="*{poolArea}">
+                        <p class="form-helper text-danger" th:errors="*{poolArea}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Floor</label>
+                        <input type="text" class="form-control" th:field="*{floor}">
+                        <p class="form-helper text-danger" th:errors="*{floor}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Type</label>
+                        <select class="form-select" aria-label="Default select example" th:field="*{serviceType.id}">
+                            <option th:each="type:${serviceTypes}" th:value="${type.id}"
+                                    th:if="${serviceDTO.serviceType.id == type.id}" th:text="${type.name}"></option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <label>Rent Type</label>
+                        <select class="form-select" aria-label="Default select example" th:field="*{rentType.id}">
+                            <option th:each="rentType:${rentTypes}" th:value="${rentType.id}"
+                                    th:text="${rentType.name}"></option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/service" class="btn btn-dark">Cancel</a>
+                    <input type="submit" class="btn btn-info" value="Create">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <h5 class="text-center text-danger" th:text="${message}" id="message"></h5>
+    </div>
+</div>
+
+</body>
+<script>
+    function showMessage() {
+        document.getElementById("message").innerText = "";
+    }
+
+    setTimeout(showMessage, 1500);
+
+    $(document).ready(function () {
+        let idType = $("#typeId").attr('data-typeId');
+
+        if (idType == 2) {
+            $("#poolArea").hide()
+        }
+        if (idType == 3) {
+            $("#roomStandard").hide()
+            $("#poolArea").hide()
+        }
+    });
+</script>
+</html>

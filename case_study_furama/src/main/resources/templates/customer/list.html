@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>List Customer</title>
     <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+            integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
@@ -62,7 +63,9 @@
                 <td>
                     <a class="btn btn-primary" th:href="@{/customer/edit/{id}(id=${customer.id})}">Edit</a></td>
                 <td>
-                    <button type="button" th:data-name="${customer.name}" th:data-code="${customer.customerCode}" th:data-id="${customer.id}" class="launchDeleteModal btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" th:data-name="${customer.name}" th:data-code="${customer.customerCode}"
+                            th:data-id="${customer.id}" class="launchDeleteModal btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
                         Delete
                     </button>
                 </td>
@@ -81,15 +84,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="/customer/delete" method="post">
-            <div class="modal-body">
-                <input type="hidden" id="idCustomer" name="idDelete">
-               <p id="customerCode"></p>
-               <p id="customerName"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="deleteCustomer">Delete</button>
-            </div>
+                <div class="modal-body">
+                    <input type="hidden" id="idCustomer" name="idDelete">
+                    <p id="customerCode"></p>
+                    <p id="customerName"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="deleteCustomer">Delete</button>
+                </div>
             </form>
         </div>
     </div>
@@ -102,9 +105,10 @@
     function showMessage() {
         document.getElementById("message").innerText = "";
     }
+
     setTimeout(showMessage, 1500);
 
-    $(document).on('click',".launchDeleteModal",function (){
+    $(document).on('click', ".launchDeleteModal", function () {
         let idDelete = $(this).attr('data-id');
         let nameDelete = $(this).attr('data-name');
         let codeDelete = $(this).attr('data-code');
