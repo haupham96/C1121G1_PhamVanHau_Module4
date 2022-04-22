@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Contract</title>
+</head>
+<th:block th:replace="~{/layout::linkBootStrap}"></th:block>
+<style th:replace="~{/layout::style}"></style>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <form method="post" th:object="${contractDTO}">
+                <div class="modal-header">
+                    <h4 class="text-primary">Create new Contract</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Start Day</label>
+                        <input type="date" class="form-control" th:field="*{startDate}">
+                        <p class="form-helper text-danger" th:errors="*{startDate}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>End Day</label>
+                        <input type="date" class="form-control" th:field="*{endDate}">
+                        <p class="form-helper text-danger" th:errors="*{endDate}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Deposit</label>
+                        <input type="text" class="form-control" th:field="*{deposit}">
+                        <p class="form-helper text-danger" th:errors="*{deposit}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer</label>
+                        <select class="form-select" aria-label="Default select example" th:field="*{customer}">
+                            <option th:each="customer:${customers}" th:value="${customer.id}"
+                                    th:text="${customer.name}"></option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <label>Employee</label>
+                        <select class="form-select" aria-label="Default select example" th:field="*{employee}">
+                            <option th:each="employee:${employees}" th:value="${employee.id}"
+                                    th:text="${employee.name}"></option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <label>Service</label>
+                        <select class="form-select" aria-label="Default select example" th:field="*{service}">
+                            <option th:each="service:${services}" th:value="${service.id}"
+                                    th:text="${service.name}"></option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/home" class="btn btn-dark">Cancel</a>
+                    <input type="submit" class="btn btn-info text-light" value="Create">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

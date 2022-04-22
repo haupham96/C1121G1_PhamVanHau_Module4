@@ -18,4 +18,6 @@ public interface IFuramaService {
     ServiceType findServiceTypeById(Integer typeId);
 
     void save(Service service);
+
+    List<Service> listService();
 }

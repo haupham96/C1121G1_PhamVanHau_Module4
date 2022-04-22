@@ -70,4 +70,9 @@ public class EmployeeService implements furama.service.IEmployeeService {
     public Page<Employee> searchByEmployeeName(String s, Pageable pageable) {
         return this.iEmployeeRepository.findAllByNameContaining(s, pageable);
     }
+
+    @Override
+    public List<Employee> listEmployee() {
+        return this.iEmployeeRepository.findAll();
+    }
 }

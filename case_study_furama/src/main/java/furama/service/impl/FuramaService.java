@@ -50,4 +50,9 @@ public class FuramaService implements IFuramaService {
         this.iFuramaServiceRepository.save(service);
     }
 
+    @Override
+    public List<furama.model.service.Service> listService() {
+        return this.iFuramaServiceRepository.findAll();
+    }
+
 }

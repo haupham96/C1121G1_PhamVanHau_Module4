@@ -25,4 +25,6 @@ public interface IEmployeeService {
     void deleteById(Integer idDelete);
 
     Page<Employee> searchByEmployeeName(String s, Pageable pageable);
+
+    List<Employee> listEmployee();
 }

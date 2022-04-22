@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home Page</title>
+    <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
 </head>
 <body>
-
+<h1>Hello this is Home Page</h1>
+<h1 id="mess" class="text-danger text-center" th:text="${message}"></h1>
 </body>
+<script>
+    function showMess() {
+        document.getElementById("mess").innerText = "";
+    }
+    setTimeout(showMess, 1500);
+</script>
 </html>

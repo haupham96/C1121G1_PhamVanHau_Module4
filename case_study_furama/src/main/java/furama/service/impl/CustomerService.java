@@ -51,4 +51,9 @@ public class CustomerService implements ICustomerService {
         return this.iCustomerRepository.findAllByNameContaining(s, pageable);
     }
 
+    @Override
+    public List<Customer> listCustomer() {
+        return this.iCustomerRepository.findAll();
+    }
+
 }
