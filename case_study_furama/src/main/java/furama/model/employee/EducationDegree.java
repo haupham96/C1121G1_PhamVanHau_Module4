@@ -3,6 +3,7 @@ package furama.model.employee;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,8 +15,8 @@ public class EducationDegree {
 
     private String name ;
 
-    @OneToOne(mappedBy = "educationDegree")
-    private Employee employee ;
+    @OneToMany(mappedBy = "educationDegree")
+    private Set<Employee> employee;
 
     public EducationDegree() {
     }

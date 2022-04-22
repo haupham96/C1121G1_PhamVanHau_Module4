@@ -14,7 +14,7 @@
         <div class="col-6 mx-auto">
             <form method="post" th:object="${serviceDTO}">
                 <div class="modal-header" id="typeId" th:data-typeId="${serviceDTO.serviceType.id}">
-                    <h4 class="text-primary">Create new Customer</h4>
+                    <h4 class="text-primary">Create new Service</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -87,18 +87,9 @@
             </form>
         </div>
     </div>
-    <div>
-        <h5 class="text-center text-danger" th:text="${message}" id="message"></h5>
-    </div>
 </div>
-
 </body>
 <script>
-    function showMessage() {
-        document.getElementById("message").innerText = "";
-    }
-
-    setTimeout(showMessage, 1500);
 
     $(document).ready(function () {
         let idType = $("#typeId").attr('data-typeId');

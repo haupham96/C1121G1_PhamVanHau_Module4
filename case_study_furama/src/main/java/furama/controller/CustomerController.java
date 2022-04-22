@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -29,9 +30,14 @@ public class CustomerController {
     private ICustomerService iCustomerService;
 
     @GetMapping("")
-    public String listCustomer(Model model, @PageableDefault(value = 5) Pageable pageable) {
-        Page<Customer> customers = this.iCustomerService.findAll(pageable);
-        model.addAttribute("customers", customers);
+    public String listCustomer(@RequestParam Optional<String> keyword, Model model, @PageableDefault(value = 5) Pageable pageable) {
+        if(!keyword.isPresent() || keyword.get().equals("")){
+            Page<Customer> customers = this.iCustomerService.findAll(pageable);
+            model.addAttribute("customers", customers);
+        } else {
+            Page<Customer> customers = this.iCustomerService.searchByCustomerName(keyword.get(),pageable);
+            model.addAttribute("customers", customers);
+        }
         return "/customer/list";
     }
 
@@ -45,8 +51,8 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public String createCustomer(@Validated @ModelAttribute CustomerDTO customerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-//        customerDTO.validate(customerDTO, bindingResult);
+    public String createCustomer(@Validated @ModelAttribute CustomerDTO customerDTO, BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
         if (bindingResult.hasFieldErrors()) {
             return "/customer/create";
         }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,8 +17,8 @@ public class Position {
 
     private String name ;
 
-    @OneToOne(mappedBy = "position")
-    private Employee employee;
+    @OneToMany(mappedBy = "position")
+    private Set<Employee> employee;
 
     public Position() {
     }

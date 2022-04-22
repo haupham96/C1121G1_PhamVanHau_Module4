@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
-    @Query(value = "SELECT * FROM case_study_module_4.customer;", nativeQuery = true)
-    List<Customer> findAllList();
+    Page<Customer> findAllByNameContaining(String name, Pageable pageable);
 }

@@ -18,4 +18,6 @@ public interface ICustomerService {
     Customer findById(Integer id);
 
     void deleteById(Integer idDelete);
+
+    Page<Customer> searchByCustomerName(String s, Pageable pageable);
 }

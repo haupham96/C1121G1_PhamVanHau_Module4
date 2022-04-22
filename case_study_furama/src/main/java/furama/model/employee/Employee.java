@@ -9,34 +9,34 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(name = "EMPLOYEE_UK_PK", columnNames = {"position_id", "education_degree_id", "division_id"})})
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String name;
+
     @Column(columnDefinition = "DATE")
     private String birthday;
 
     private String idCard;
 
-    @Column(columnDefinition = "DOUBLE")
     private String salary;
 
     private String phone;
     private String email;
     private String address;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "position_id", referencedColumnName = "id", nullable = false)
     private Position position;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "education_degree_id", referencedColumnName = "id", nullable = false)
     private EducationDegree educationDegree;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "division_id", referencedColumnName = "id", nullable = false)
     private Division division;
 

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,15 +19,14 @@ public class Division {
 
     private String name ;
 
-    @OneToOne(mappedBy = "division")
-    private Employee employee ;
+    @OneToMany(mappedBy = "division")
+    private Set<Employee> employee;
 
     public Division() {
     }
 
-    public Division(String name, Employee employee) {
+    public Division(String name) {
         this.name = name;
-        this.employee = employee;
     }
 
 }
