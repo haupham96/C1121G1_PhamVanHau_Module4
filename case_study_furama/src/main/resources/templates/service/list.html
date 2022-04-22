@@ -60,12 +60,16 @@
                 <td th:text="${service.area}"></td>
                 <td th:text="${service.price}"></td>
                 <td th:text="${service.maxPeople}"></td>
-                <td th:if="${service.standardRoom != '-1' && service.standardRoom != ''}" th:text="${service.standardRoom}"></td>
-                <td class="text-danger" th:if="${service.standardRoom == '-1' && service.standardRoom == ''}" th:text="${'Not Available'}"></td>
+
+                <td th:if="${service.standardRoom != ''}" th:text="${service.standardRoom}"></td>
+                <td class="text-danger" th:if="${service.standardRoom == ''}" th:text="${'Not Available'}"></td>
+
                 <td th:text="${service.otherConvenience}"></td>
-                <td class="text-danger" th:if="${service.poolArea == '-1' || service.poolArea == ''}"
+
+                <td class="text-danger" th:if="${service.poolArea == ''}"
                     th:text="${'Not Available'}"></td>
-                <td th:if="${service.poolArea != '-1' && service.poolArea != ''}" th:text="${service.poolArea}"></td>
+                <td th:if="${service.poolArea != ''}" th:text="${service.poolArea}"></td>
+
                 <td th:text="${service.floor}"></td>
                 <td th:text="${service.rentType.name}"></td>
                 <td th:text="${service.serviceType.name}"></td>
