@@ -15,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -78,6 +75,17 @@ public class ContractController {
         redirectAttributes.addFlashAttribute("message","Create success new contract !");
         return "redirect:/home";
 
+    }
+
+    @GetMapping("/view/{id}")
+    public String showContractDetail(@PathVariable Integer id,Model model){
+
+        Contract contract = this.iContractService.findById(id);
+        if(contract == null){
+            return "/not-found";
+        }
+        model.addAttribute("contract",contract);
+        return "/contract/view-contract";
     }
 
 }

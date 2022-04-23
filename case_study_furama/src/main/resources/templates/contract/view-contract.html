@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Contract</title>
+    <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
+    <style th:replace="~{/layout::style}"></style>
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th class="table-primary">Contract ID</th>
+            <td th:text="${contract.id}"></td>
+        </tr>
+        <tr>
+            <th class="table-primary">Start Date</th>
+            <td th:text="${contract.startDate}"></td>
+        </tr>
+        <tr>
+            <th class="table-primary">End Date</th>
+            <td th:text="${contract.endDate}"></td>
+        </tr>
+        <tr>
+            <th class="table-primary">Deposit</th>
+            <td th:text="${contract.deposit}"></td>
+        </tr>
+        <tr>
+            <th class="table-primary">Customer</th>
+            <td th:text="${contract.customer.name}"></td>
+        </tr>
+        <tr>
+            <th class="table-primary">Employee</th>
+            <td th:text="${contract.employee.name}"></td>
+        </tr>
+        <tr>
+            <th class="table-primary">Service</th>
+            <td th:text="${contract.service.name}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

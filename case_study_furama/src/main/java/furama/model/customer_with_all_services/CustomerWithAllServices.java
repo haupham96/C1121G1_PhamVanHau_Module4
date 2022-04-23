@@ -1,9 +1,5 @@
 package furama.model.customer_with_all_services;
 
-import furama.model.contract.AttachService;
-import furama.model.customer.Customer;
-import furama.model.employee.Employee;
-import furama.model.service.Service;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
