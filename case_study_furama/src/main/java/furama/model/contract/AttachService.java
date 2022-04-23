@@ -16,10 +16,8 @@ public class AttachService {
 
     private String name ;
 
-    @Column(columnDefinition = "double")
     private String price ;
 
-    @Column(columnDefinition = "int")
     private String unit ;
 
     private String status ;

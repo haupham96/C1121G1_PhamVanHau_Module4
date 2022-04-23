@@ -3,7 +3,13 @@ package furama.controller;
 import furama.dto.customer_dto.CustomerDTO;
 import furama.model.customer.Customer;
 import furama.model.customer.CustomerType;
+import furama.model.customer_with_all_services.CustomerWithAllServices;
+import furama.model.employee.Employee;
+import furama.model.service.Service;
 import furama.service.ICustomerService;
+import furama.service.ICustomerWithAllServicesService;
+import furama.service.IEmployeeService;
+import furama.service.IFuramaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +34,17 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService iCustomerService;
+
+    @Autowired
+    private ICustomerWithAllServicesService iCustomerWithAllServicesService ;
+
+    @Autowired
+    IFuramaService iFuramaService;
+
+    @Autowired
+    IEmployeeService iEmployeeService;
+
+
 
     @GetMapping("")
     public String listCustomer(@RequestParam Optional<String> keyword, Model model, @PageableDefault(value = 5) Pageable pageable) {
@@ -103,6 +120,21 @@ public class CustomerController {
         this.iCustomerService.deleteById(idDelete);
         redirectAttributes.addFlashAttribute("message", "Delete Success !");
         return "redirect:/customer";
+    }
+
+    @GetMapping("/use-services")
+    public String showCustomerUseServices(Model model,Pageable pageable){
+        Page<CustomerWithAllServices> listCustomerUseServices = this.iCustomerWithAllServicesService.findAll(pageable);
+
+
+        List<Customer> customers = this.iCustomerService.listCustomer();
+        List<Employee> employees = this.iEmployeeService.listEmployee();
+        List<Service> services = this.iFuramaService.listService();
+        model.addAttribute("customers",customers);
+        model.addAttribute("employees",employees);
+        model.addAttribute("services",services);
+        model.addAttribute("list",listCustomerUseServices);
+        return "/customer/customer-with-all-services";
     }
 
 }
