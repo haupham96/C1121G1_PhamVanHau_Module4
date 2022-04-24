@@ -16,7 +16,9 @@ public class CustomerWithAllServicesService implements ICustomerWithAllServicesS
 
     @Override
     public Page<CustomerWithAllServices> findAll(Pageable pageable) {
+
         Page<CustomerWithAllServices> page = this.iCustomerWithAllServicesRepository.findAll(pageable);
+
         for(CustomerWithAllServices obj:page){
             obj.setTotalMoney(obj.calculateMoney());
         }

@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+
 @Entity
 @Immutable
 @Table(name = "customer_with_all_services")
@@ -54,7 +55,7 @@ public class CustomerWithAllServices {
         this.attachServiceName = attachServiceName;
         this.attachServicePrice = attachServicePrice;
         this.totalQuantity = totalQuantity;
-        this.totalMoney = totalMoney;
+        this.totalMoney = this.calculateMoney();
     }
 
     public String calculateMoney(){

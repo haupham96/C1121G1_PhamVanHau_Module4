@@ -1,5 +1,6 @@
 package furama.model.contract;
 
+
 import lombok.Getter;
 import lombok.Setter;
 

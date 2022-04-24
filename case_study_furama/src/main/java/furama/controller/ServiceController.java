@@ -5,11 +5,14 @@ import furama.model.service.RentType;
 import furama.model.service.Service;
 import furama.model.service.ServiceType;
 import furama.service.IFuramaService;
+import furama.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -27,9 +31,16 @@ public class ServiceController {
     IFuramaService iFuramaService;
 
     @GetMapping("")
-    public String listService(Model model, @PageableDefault(value = 5) Pageable pageable) {
+    public String listService(Model model, @PageableDefault(value = 5) Pageable pageable, Principal principal) {
         Page<Service> services = this.iFuramaService.findAll(pageable);
         model.addAttribute("services", services);
+
+        if(principal != null){
+            User userLogin = (User) ((Authentication)principal).getPrincipal();
+            String userInfor = WebUtils.toString(userLogin);
+            model.addAttribute("userInfor",userInfor);
+        }
+
         return "/service/list";
     }
 

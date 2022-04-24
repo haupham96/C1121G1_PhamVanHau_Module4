@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h3>Enter user name and Password</h3>
+<h5 style="color: red" th:if="${errMessage}" th:text="${errMessage}"></h5>
+<form name="f" th:action="@{/hau_vip_pro_security}" method="post">
+<table>
+    <tr>
+        <td>User Name :</td>
+        <td><input type="text" name="account"></td>
+    </tr>
+    <tr>
+        <td>Password :</td>
+        <td><input type="text" name="password"></td>
+    </tr>
+    <tr>
+        <td>Remember Me ?</td>
+        <td><input type="checkbox" name="remember-me"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="Login" name="submit" ></td>
+    </tr>
+</table>
+</form>
+</body>
+</html>

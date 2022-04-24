@@ -6,8 +6,41 @@
     <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
 </head>
 <body>
-<h1>Hello this is Home Page</h1>
-<h1 id="mess" class="text-danger text-center" th:text="${message}"></h1>
+<div th:fragment="navigationBar">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand text-light" href="#">Furama</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-light btn btn-danger" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light btn btn-primary ms-1" href="/customer">Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light btn btn-primary ms-1" href="/employee">Employee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light btn btn-primary ms-1" href="/service">Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light btn btn-primary ms-1" href="/contract/create">Contract</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <p class="text-light" th:text="${userInfor}"></p>
+                    <a th:if="${userInfor}" class="btn btn-outline-success" th:href="@{/logout}">LogOut</a>
+                    <a th:if="${userInfor == null}" class="btn btn-outline-success" th:href="@{/login}">Login</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+
 </body>
 <script>
     function showMess() {

@@ -10,11 +10,14 @@ import furama.service.ICustomerService;
 import furama.service.ICustomerWithAllServicesService;
 import furama.service.IEmployeeService;
 import furama.service.IFuramaService;
+import furama.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +25,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,16 +48,20 @@ public class CustomerController {
     @Autowired
     IEmployeeService iEmployeeService;
 
-
-
     @GetMapping("")
-    public String listCustomer(@RequestParam Optional<String> keyword, Model model, @PageableDefault(value = 5) Pageable pageable) {
+    public String listCustomer(Principal principal, @RequestParam Optional<String> keyword, Model model, @PageableDefault(value = 5) Pageable pageable) {
         if(!keyword.isPresent() || keyword.get().equals("")){
             Page<Customer> customers = this.iCustomerService.findAll(pageable);
             model.addAttribute("customers", customers);
         } else {
             Page<Customer> customers = this.iCustomerService.searchByCustomerName(keyword.get(),pageable);
             model.addAttribute("customers", customers);
+        }
+
+        if(principal != null){
+            User userLogin = (User) ((Authentication)principal).getPrincipal();
+            String userInfor = WebUtils.toString(userLogin);
+            model.addAttribute("userInfor",userInfor);
         }
         return "/customer/list";
     }
