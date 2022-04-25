@@ -1,5 +1,6 @@
 package furama.service;
 
+import furama.model.customer_with_all_services.CustomerServiceView;
 import furama.model.customer_with_all_services.CustomerServicesView;
 import furama.model.customer_with_all_services.CustomerWithAllServices;
 import furama.model.customer_with_all_services.ICustomerServiceView;
@@ -14,4 +15,6 @@ public interface ICustomerWithAllServicesService {
     Page<CustomerServicesView> views (Pageable pageable);
 
     List<ICustomerServiceView> findAll();
+
+    List<CustomerServiceView> findAllListCustomerServiceView();
 }

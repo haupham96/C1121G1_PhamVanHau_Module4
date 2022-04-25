@@ -3,6 +3,7 @@ package furama.controller;
 import furama.dto.customer_dto.CustomerDTO;
 import furama.model.customer.Customer;
 import furama.model.customer.CustomerType;
+import furama.model.customer_with_all_services.CustomerServiceView;
 import furama.model.customer_with_all_services.CustomerServicesView;
 import furama.model.customer_with_all_services.CustomerWithAllServices;
 import furama.model.customer_with_all_services.ICustomerServiceView;
@@ -144,6 +145,8 @@ public class CustomerController {
 
         List<ICustomerServiceView> views = this.iCustomerWithAllServicesService.findAll();
 
+        List<CustomerServiceView> listCustomerServiceView = this.iCustomerWithAllServicesService.findAllListCustomerServiceView();
+
         if (principal != null) {
             User user = (User) ((Authentication) principal).getPrincipal();
             String userInfor = WebUtils.toString(user);
@@ -151,7 +154,7 @@ public class CustomerController {
             furama.model.user.User userModel = this.iUserService.findByUserName(user.getUsername());
             model.addAttribute("userModel",userModel);
         }
-        model.addAttribute("views", views);
+        model.addAttribute("views", listCustomerServiceView);
         return "/customer/customer-services-view";
     }
 

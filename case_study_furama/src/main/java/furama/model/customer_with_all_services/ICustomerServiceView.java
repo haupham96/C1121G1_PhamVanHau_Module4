@@ -3,7 +3,6 @@ package furama.model.customer_with_all_services;
 import org.springframework.stereotype.Service;
 
 public interface ICustomerServiceView {
-    Integer getId();
 
     Integer getContractId();
 
@@ -23,6 +22,6 @@ public interface ICustomerServiceView {
 
     Integer getTotalQuantity();
 
-    String getTotalMoneytotalMoney();
+    String getTotalMoney();
 
 }

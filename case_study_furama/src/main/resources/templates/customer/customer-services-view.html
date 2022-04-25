@@ -15,7 +15,7 @@
         <table class="table">
             <thead class="table-primary">
             <tr>
-                <th>No.</th>
+                <th>Contract ID</th>
                 <th>Customer Name</th>
                 <th>Employee Name</th>
                 <th>Service Name</th>
@@ -28,14 +28,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="obj,loop:${views}">
-                <td th:text="${loop.count}"></td>
+            <tr th:each="obj:${views}">
+                <td th:text="${obj.contract.id}"></td>
                 <td th:text="${obj.customer.name}"></td>
-                <td th:text="${obj.employee.name}"></td>
-                <td  th:text="${obj.service.name}"></td>
-                <td th:text="${obj.servicePrice}"></td>
-                <td th:text="${obj.deposit}"></td>
-                <td th:text="${obj.attachServiceName}"></td>
+                <td  th:text="${obj.employee.name}"></td>
+                <td th:text="${obj.service.name}"></td>
+                <td th:text="${obj.service.price}"></td>
+                <td th:text="${obj.contract.deposit}"></td>
+
+                <td th:if="${obj.attachServiceName != ''}" th:text="${obj.attachServiceName}"></td>
+                <td class="text-danger" th:if="${obj.attachServiceName == ''}" th:text="${'không sử dụng'}"></td>
+
                 <td th:text="${obj.attachServicePrice}"></td>
                 <td th:text="${obj.totalQuantity}"></td>
                 <td th:text="${obj.totalMoney}"></td>
