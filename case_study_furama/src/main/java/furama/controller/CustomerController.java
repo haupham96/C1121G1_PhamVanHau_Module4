@@ -5,6 +5,7 @@ import furama.model.customer.Customer;
 import furama.model.customer.CustomerType;
 import furama.model.customer_with_all_services.CustomerServicesView;
 import furama.model.customer_with_all_services.CustomerWithAllServices;
+import furama.model.customer_with_all_services.ICustomerServiceView;
 import furama.model.employee.Employee;
 import furama.model.service.Service;
 import furama.service.*;
@@ -81,8 +82,11 @@ public class CustomerController {
 
     @PostMapping("/create")
     public String createCustomer(@Validated @ModelAttribute CustomerDTO customerDTO, BindingResult bindingResult,
-                                 RedirectAttributes redirectAttributes) {
+                                 RedirectAttributes redirectAttributes,Model model) {
         if (bindingResult.hasFieldErrors()) {
+            List<CustomerType> customerTypes = this.iCustomerService.findAllCustomerType();
+            model.addAttribute("customerDTO", customerDTO);
+            model.addAttribute("customerTypes", customerTypes);
             return "/customer/create";
         }
         Customer customer = new Customer();
@@ -113,6 +117,7 @@ public class CustomerController {
 
         if (bindingResult.hasFieldErrors()) {
             List<CustomerType> customerTypes = this.iCustomerService.findAllCustomerType();
+            model.addAttribute("customerDTO", customerDTO);
             model.addAttribute("customerTypes", customerTypes);
             return "/customer/edit";
         }
@@ -137,7 +142,7 @@ public class CustomerController {
     @GetMapping("/use-services")
     public String showCustomerUseServices(Model model, Pageable pageable, Principal principal) {
 
-        Page<CustomerServicesView> views = this.iCustomerWithAllServicesService.views(pageable);
+        List<ICustomerServiceView> views = this.iCustomerWithAllServicesService.findAll();
 
         if (principal != null) {
             User user = (User) ((Authentication) principal).getPrincipal();

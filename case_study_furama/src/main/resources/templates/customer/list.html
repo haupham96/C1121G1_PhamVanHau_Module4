@@ -39,8 +39,8 @@
                 <a class="page-link" th:if="${customers.hasPrevious()}"
                    th:href="@{/customer(page=${customers.number - 1})}">Previous</a>
             </li>
-            <li class="page-item"><a class="page-link text-dark" th:text="${customers.number + 1}">1</a></li>
-            <li class="page-item"><a class="page-link text-dark" th:text="${customers.totalPages}">3</a></li>
+            <li class="page-item"><a class="page-link text-dark" th:text="${customers.number + 1}"></a></li>
+            <li class="page-item"><a class="page-link text-dark" th:text="${customers.totalPages}"></a></li>
             <li class="page-item">
                 <a class="page-link" th:if="${customers.hasNext()}"
                    th:href="@{/customer(page=${customers.number + 1})}">Next</a>
