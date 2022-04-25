@@ -16,7 +16,7 @@ public class SecurityController {
         if(err.isPresent() && err.get().equals("true")){
             model.addAttribute("errMessage","Invalid User or Password");
         }
-        return "/security/loginPage";
+        return "/loginForm";
     }
 
     @GetMapping("/err-login")

@@ -5,6 +5,7 @@ import furama.model.service.RentType;
 import furama.model.service.Service;
 import furama.model.service.ServiceType;
 import furama.service.IFuramaService;
+import furama.service.IUserService;
 import furama.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class ServiceController {
     @Autowired
     IFuramaService iFuramaService;
 
+    @Autowired
+    IUserService iUserService;
+
     @GetMapping("")
     public String listService(Model model, @PageableDefault(value = 5) Pageable pageable, Principal principal) {
         Page<Service> services = this.iFuramaService.findAll(pageable);
@@ -39,6 +43,9 @@ public class ServiceController {
             User userLogin = (User) ((Authentication)principal).getPrincipal();
             String userInfor = WebUtils.toString(userLogin);
             model.addAttribute("userInfor",userInfor);
+
+            furama.model.user.User userModel = this.iUserService.findByUserName(userLogin.getUsername());
+            model.addAttribute("userModel",userModel);
         }
 
         return "/service/list";

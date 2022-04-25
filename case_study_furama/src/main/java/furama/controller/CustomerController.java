@@ -3,13 +3,11 @@ package furama.controller;
 import furama.dto.customer_dto.CustomerDTO;
 import furama.model.customer.Customer;
 import furama.model.customer.CustomerType;
+import furama.model.customer_with_all_services.CustomerServicesView;
 import furama.model.customer_with_all_services.CustomerWithAllServices;
 import furama.model.employee.Employee;
 import furama.model.service.Service;
-import furama.service.ICustomerService;
-import furama.service.ICustomerWithAllServicesService;
-import furama.service.IEmployeeService;
-import furama.service.IFuramaService;
+import furama.service.*;
 import furama.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class CustomerController {
     private ICustomerService iCustomerService;
 
     @Autowired
-    private ICustomerWithAllServicesService iCustomerWithAllServicesService ;
+    private ICustomerWithAllServicesService iCustomerWithAllServicesService;
 
     @Autowired
     IFuramaService iFuramaService;
@@ -48,20 +46,26 @@ public class CustomerController {
     @Autowired
     IEmployeeService iEmployeeService;
 
+    @Autowired
+    IUserService iUserService ;
+
     @GetMapping("")
     public String listCustomer(Principal principal, @RequestParam Optional<String> keyword, Model model, @PageableDefault(value = 5) Pageable pageable) {
-        if(!keyword.isPresent() || keyword.get().equals("")){
+        if (!keyword.isPresent() || keyword.get().equals("")) {
             Page<Customer> customers = this.iCustomerService.findAll(pageable);
             model.addAttribute("customers", customers);
         } else {
-            Page<Customer> customers = this.iCustomerService.searchByCustomerName(keyword.get(),pageable);
+            Page<Customer> customers = this.iCustomerService.searchByCustomerName(keyword.get(), pageable);
             model.addAttribute("customers", customers);
         }
 
-        if(principal != null){
-            User userLogin = (User) ((Authentication)principal).getPrincipal();
+        if (principal != null) {
+            User userLogin = (User) ((Authentication) principal).getPrincipal();
             String userInfor = WebUtils.toString(userLogin);
-            model.addAttribute("userInfor",userInfor);
+            model.addAttribute("userInfor", userInfor);
+
+            furama.model.user.User userModel = this.iUserService.findByUserName(userLogin.getUsername());
+            model.addAttribute("userModel",userModel);
         }
         return "/customer/list";
     }
@@ -93,7 +97,7 @@ public class CustomerController {
     public String editForm(@PathVariable Integer id, Model model) {
         Customer customer = this.iCustomerService.findById(id);
         if (customer == null) {
-            return "not-found";
+            return "/err-404";
         }
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDTO);
@@ -114,7 +118,7 @@ public class CustomerController {
         }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO, customer);
-//        customer.setId(id);
+
         this.iCustomerService.save(customer);
         redirectAttributes.addFlashAttribute("message", "Edit Success !");
         return "redirect:/customer";
@@ -123,7 +127,7 @@ public class CustomerController {
     @PostMapping("/delete")
     public String deleteCustomer(@RequestParam Integer idDelete, RedirectAttributes redirectAttributes) {
         if (this.iCustomerService.findById(idDelete) == null) {
-            return "not-found";
+            return "/err-404";
         }
         this.iCustomerService.deleteById(idDelete);
         redirectAttributes.addFlashAttribute("message", "Delete Success !");
@@ -131,18 +135,19 @@ public class CustomerController {
     }
 
     @GetMapping("/use-services")
-    public String showCustomerUseServices(Model model,Pageable pageable){
-        Page<CustomerWithAllServices> listCustomerUseServices = this.iCustomerWithAllServicesService.findAll(pageable);
+    public String showCustomerUseServices(Model model, Pageable pageable, Principal principal) {
 
+        Page<CustomerServicesView> views = this.iCustomerWithAllServicesService.views(pageable);
 
-        List<Customer> customers = this.iCustomerService.listCustomer();
-        List<Employee> employees = this.iEmployeeService.listEmployee();
-        List<Service> services = this.iFuramaService.listService();
-        model.addAttribute("customers",customers);
-        model.addAttribute("employees",employees);
-        model.addAttribute("services",services);
-        model.addAttribute("list",listCustomerUseServices);
-        return "/customer/customer-with-all-services";
+        if (principal != null) {
+            User user = (User) ((Authentication) principal).getPrincipal();
+            String userInfor = WebUtils.toString(user);
+            model.addAttribute("userInfor", userInfor);
+            furama.model.user.User userModel = this.iUserService.findByUserName(user.getUsername());
+            model.addAttribute("userModel",userModel);
+        }
+        model.addAttribute("views", views);
+        return "/customer/customer-services-view";
     }
 
 }

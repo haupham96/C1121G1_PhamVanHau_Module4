@@ -8,21 +8,30 @@
             integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:replace="~{/index::navigationBar}"></div>
+<div class="row">
+    <div th:replace="~{/index::navigationBar}"></div>
+</div>
 <div class="container">
     <div class="d-flex justify-content-center">
         <h1 class="text-primary">List Customer</h1>
     </div>
-    <div class="row">
-        <form action="/customer">
-            <input type="text" name="keyword" placeholder="input name">
-            <input class="btn btn-danger" type="submit" value="Search">
-        </form>
+    <div>
+        <div style="display: flex; justify-content: flex-start; flex-direction: column">
+            <form action="/customer">
+                <input type="text" name="keyword" placeholder="input name">
+                <input class="btn btn-danger" type="submit" value="Search">
+            </form>
+            <div class="col-3">
+                <a class="btn btn-outline-secondary text-decoration-none" href="/customer/use-services">Customer Use
+                    Services</a>
+            </div>
+            <a class="btn btn-info col-2 text-light mt-1" href="/customer/create">Create New Customer</a>
+        </div>
+
+
         <br>
     </div>
-    <div class="row">
-        <a class="btn btn-info col-2 text-light" href="/customer/create">Create New Customer</a>
-    </div>
+
     <br>
     <div class="row">
         <ul class="pagination">

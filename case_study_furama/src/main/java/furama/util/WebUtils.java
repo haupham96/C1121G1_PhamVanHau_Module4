@@ -8,10 +8,9 @@ import java.util.Collection;
 public class WebUtils {
     public static String toString(User user) {
         StringBuilder sb = new StringBuilder();
-        sb.append("User : ").append(user.getUsername());
         Collection<GrantedAuthority> grantedAuthorities = user.getAuthorities();
         if (grantedAuthorities != null && !grantedAuthorities.isEmpty()) {
-            sb.append("(");
+            sb.append("[");
             boolean first = true;
             for (GrantedAuthority authority : grantedAuthorities) {
                 if (first) {
@@ -21,7 +20,7 @@ public class WebUtils {
                     sb.append(",").append(authority.getAuthority());
                 }
             }
-            sb.append(")");
+            sb.append("]");
         }
         return sb.toString();
     }

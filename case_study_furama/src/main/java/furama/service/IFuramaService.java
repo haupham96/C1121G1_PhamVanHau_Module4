@@ -20,4 +20,6 @@ public interface IFuramaService {
     void save(Service service);
 
     List<Service> listService();
+
+    Service findById(Integer id);
 }

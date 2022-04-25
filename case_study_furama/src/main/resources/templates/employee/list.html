@@ -14,105 +14,104 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <a class="btn btn-info col-2 text-light" th:href="@{/employee/create}">Create New Employee</a>
+        <div class="d-flex flex-column">
+            <a class="btn btn-info col-2 text-light" th:href="@{/employee/create}">Create New Employee</a>
+            <br>
+            <form action="/employee">
+                <input type="text" name="keyword" placeholder="input name">
+                <input class="btn btn-danger" type="submit" value="Search">
+            </form>
+            <br>
+            <br>
+        </div>
         <br>
-    </div>
-    <br>
-    <div class="row">
-        <form action="/employee">
-            <input type="text" name="keyword" placeholder="input name">
-            <input class="btn btn-danger" type="submit" value="Search">
-        </form>
-        <br>
-    </div>
-</div>
-<br>
-<div class="container-fluid">
-    <div class="row">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" th:if="${employees.hasPrevious()}"
-                   th:href="@{/employee(page=${employees.number - 1})}">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link text-dark" th:text="${employees.number + 1}">1</a></li>
-            <li class="page-item"><a class="page-link text-dark" th:text="${employees.totalPages}">3</a></li>
-            <li class="page-item">
-                <a class="page-link" th:if="${employees.hasNext()}"
-                   th:href="@{/employee(page=${employees.number + 1})}">Next</a>
-            </li>
-        </ul>
-    </div>
-    <div class="row">
-        <table class="table">
-            <thead class="table-dark">
-            <tr>
-                <th>No.</th>
-                <th>Name</th>
-                <th>Birthday</th>
-                <th>ID Number</th>
-                <th>Salary</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Position</th>
-                <th>Education Degree</th>
-                <th>Division</th>
-                <th colspan="2" class="text-center">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="employee,loop:${employees}">
-                <td th:text="${loop.count}"></td>
-                <td th:text="${employee.name}"></td>
-                <td th:text="${employee.birthday}"></td>
-                <td th:text="${employee.idCard}"></td>
-                <td th:text="${employee.salary}"></td>
-                <td th:text="${employee.phone}"></td>
-                <td th:text="${employee.email}"></td>
-                <td th:text="${employee.address}"></td>
-                <td th:text="${employee.position.name}"></td>
-                <td th:text="${employee.educationDegree.name}"></td>
-                <td th:text="${employee.division.name}"></td>
-                <td>
-                    <a class="btn btn-primary" th:href="@{/employee/edit/{id}(id=${employee.id})}">Edit</a>
-                </td>
-                <td>
-                    <button th:data-name="${employee.name}" th:data-id="${employee.id}" type="button"
-                            class="deleteBtn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div>
-    <h5 class="text-center text-danger" th:text="${message}" id="message"></h5>
-</div>
-
-<!-- Delete Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="/employee/delete" method="post">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete this Employee ?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="idDelete" name="idDelete">
-                    <p id="nameDelete"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </div>
+        <div class="container-fluid">
+            <div class="row">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:if="${employees.hasPrevious()}"
+                           th:href="@{/employee(page=${employees.number - 1})}">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link text-dark" th:text="${employees.number + 1}">1</a></li>
+                    <li class="page-item"><a class="page-link text-dark" th:text="${employees.totalPages}">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" th:if="${employees.hasNext()}"
+                           th:href="@{/employee(page=${employees.number + 1})}">Next</a>
+                    </li>
+                </ul>
             </div>
-        </form>
-    </div>
-</div>
+            <div class="row">
+                <table class="table">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Birthday</th>
+                        <th>ID Number</th>
+                        <th>Salary</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Position</th>
+                        <th>Education Degree</th>
+                        <th>Division</th>
+                        <th colspan="2" class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee,loop:${employees}">
+                        <td th:text="${loop.count}"></td>
+                        <td th:text="${employee.name}"></td>
+                        <td th:text="${employee.birthday}"></td>
+                        <td th:text="${employee.idCard}"></td>
+                        <td th:text="${employee.salary}"></td>
+                        <td th:text="${employee.phone}"></td>
+                        <td th:text="${employee.email}"></td>
+                        <td th:text="${employee.address}"></td>
+                        <td th:text="${employee.position.name}"></td>
+                        <td th:text="${employee.educationDegree.name}"></td>
+                        <td th:text="${employee.division.name}"></td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/employee/edit/{id}(id=${employee.id})}">Edit</a>
+                        </td>
+                        <td>
+                            <button th:data-name="${employee.name}" th:data-id="${employee.id}" type="button"
+                                    class="deleteBtn btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div>
+            <h5 class="text-center text-danger" th:text="${message}" id="message"></h5>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="/employee/delete" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete this Employee ?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="idDelete" name="idDelete">
+                            <p id="nameDelete"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 </body>
 <script>
     $(document).on('click', '.deleteBtn', function () {

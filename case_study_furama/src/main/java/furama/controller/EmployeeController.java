@@ -6,6 +6,7 @@ import furama.model.employee.EducationDegree;
 import furama.model.employee.Employee;
 import furama.model.employee.Position;
 import furama.service.IEmployeeService;
+import furama.service.IUserService;
 import furama.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class EmployeeController {
     @Autowired
     IEmployeeService iEmployeeService;
 
+    @Autowired
+    IUserService iUserService;
+
     @GetMapping("")
     public String listEmployee(@RequestParam Optional<String> keyword, Model model, @PageableDefault(value = 5) Pageable pageable, Principal principal) {
 
@@ -46,6 +50,8 @@ public class EmployeeController {
             User userLogin = (User) ((Authentication)principal).getPrincipal();
             String userInfor = WebUtils.toString(userLogin);
             model.addAttribute("userInfor",userInfor);
+            furama.model.user.User userModel = this.iUserService.findByUserName(userLogin.getUsername());
+            model.addAttribute("userModel",userModel);
         }
         return "/employee/list";
     }
@@ -88,7 +94,7 @@ public class EmployeeController {
     public String showEditForm(@PathVariable Integer id, Model model) {
         Employee employee = this.iEmployeeService.findById(id);
         if (employee == null) {
-            return "/not-found";
+            return "/err-404";
         }
         EmployeeDTO employeeDTO = new EmployeeDTO();
         BeanUtils.copyProperties(employee, employeeDTO);
@@ -127,7 +133,7 @@ public class EmployeeController {
     @PostMapping("/delete")
     public String deleteEmployee(@RequestParam Integer idDelete,RedirectAttributes redirectAttributes) {
         if (this.iEmployeeService.findById(idDelete)==null){
-            return "/not-found";
+            return "/err-404";
         }
 
         this.iEmployeeService.deleteById(idDelete);

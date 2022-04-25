@@ -37,11 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/home", "/login", "/logout").permitAll();
 
-        http.authorizeRequests().antMatchers("/customer/**","/contract/**","/service/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/customer/**","/contract/**","/service/**","/customer/use-services").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
 
         http.authorizeRequests().antMatchers("/employee/**").access("hasRole('ROLE_ADMIN')");
 
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/err-login");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/hau_vip_pro_security")
@@ -54,7 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().and().rememberMe().tokenRepository(this.persistentTokenRepository())
                 .tokenValiditySeconds(60 * 60);
-
     }
 
     @Bean

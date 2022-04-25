@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Customer</title>
+    <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
+    <style th:replace="~{/layout::style}"></style>
+</head>
+<body>
+<div class="row">
+    <div th:replace="~{/index::navigationBar}"></div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <table class="table">
+            <thead class="table-primary">
+            <tr>
+                <th>No.</th>
+                <th>Customer Name</th>
+                <th>Employee Name</th>
+                <th>Service Name</th>
+                <th>Service Price</th>
+                <th>Deposit</th>
+                <th>Attach Service</th>
+                <th>Attach Service Price</th>
+                <th>Total Quantity</th>
+                <th>Total Money</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="obj,loop:${views}">
+                <td th:text="${loop.count}"></td>
+                <td th:text="${obj.customer.name}"></td>
+                <td th:text="${obj.employee.name}"></td>
+                <td  th:text="${obj.service.name}"></td>
+                <td th:text="${obj.servicePrice}"></td>
+                <td th:text="${obj.deposit}"></td>
+                <td th:text="${obj.attachServiceName}"></td>
+                <td th:text="${obj.attachServicePrice}"></td>
+                <td th:text="${obj.totalQuantity}"></td>
+                <td th:text="${obj.totalMoney}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

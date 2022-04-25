@@ -55,4 +55,9 @@ public class FuramaService implements IFuramaService {
         return this.iFuramaServiceRepository.findAll();
     }
 
+    @Override
+    public furama.model.service.Service findById(Integer id) {
+        return this.iFuramaServiceRepository.findById(id).orElse(null);
+    }
+
 }

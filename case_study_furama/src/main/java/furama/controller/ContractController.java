@@ -5,10 +5,7 @@ import furama.model.contract.Contract;
 import furama.model.customer.Customer;
 import furama.model.employee.Employee;
 import furama.model.service.Service;
-import furama.service.IContractService;
-import furama.service.ICustomerService;
-import furama.service.IEmployeeService;
-import furama.service.IFuramaService;
+import furama.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +32,9 @@ public class ContractController {
 
     @Autowired
     IFuramaService iFuramaService;
+
+    @Autowired
+    IUserService iUserService;
 
     @GetMapping("/create")
     public String createForm(Model model){
@@ -82,7 +82,7 @@ public class ContractController {
 
         Contract contract = this.iContractService.findById(id);
         if(contract == null){
-            return "/not-found";
+            return "/err-404";
         }
         model.addAttribute("contract",contract);
         return "/contract/view-contract";

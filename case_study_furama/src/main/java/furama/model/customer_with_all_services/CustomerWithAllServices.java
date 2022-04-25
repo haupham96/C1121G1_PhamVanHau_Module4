@@ -1,5 +1,6 @@
 package furama.model.customer_with_all_services;
 
+import furama.model.customer.Customer;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
@@ -15,9 +16,11 @@ import javax.persistence.*;
 public class CustomerWithAllServices {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private String id;
+
+    @Column(name="contract_id")
+    private Integer contract_id  ;
 
     @Column(name = "service_price")
     private Integer servicePrice;
@@ -49,6 +52,7 @@ public class CustomerWithAllServices {
     public CustomerWithAllServices() {
     }
 
+
     public CustomerWithAllServices(Integer servicePrice, Integer deposit, String attachServiceName, Integer attachServicePrice, Integer totalQuantity) {
         this.servicePrice = servicePrice;
         this.deposit = deposit;
@@ -58,8 +62,8 @@ public class CustomerWithAllServices {
         this.totalMoney = this.calculateMoney();
     }
 
-    public String calculateMoney(){
-        Integer money = this.servicePrice - this.deposit + (this.attachServicePrice*this.totalQuantity);
+    public String calculateMoney() {
+        Integer money = this.servicePrice - this.deposit + (this.attachServicePrice * this.totalQuantity);
         String moneyString = String.valueOf(money);
         return moneyString;
     }
