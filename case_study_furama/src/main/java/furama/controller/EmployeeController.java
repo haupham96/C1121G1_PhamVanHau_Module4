@@ -47,6 +47,7 @@ public class EmployeeController {
             model.addAttribute("employees", employees);
         }
         if(principal != null){
+
             User userLogin = (User) ((Authentication)principal).getPrincipal();
             String userInfor = WebUtils.toString(userLogin);
             model.addAttribute("userInfor",userInfor);

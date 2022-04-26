@@ -11,6 +11,20 @@
     <div th:replace="~{/index::navigationBar}"></div>
 </div>
 <div class="container-fluid">
+        <div class="row">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:if="${views.hasPrevious()}"
+                       th:href="@{/customer/use-services(page=${views.number - 1})}">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link text-dark" th:text="${views.number + 1}"></a></li>
+                <li class="page-item"><a class="page-link text-dark" th:text="${views.totalPages}"></a></li>
+                <li class="page-item">
+                    <a class="page-link" th:if="${views.hasNext()}"
+                       th:href="@{/customer/use-services(page=${views.number + 1})}">Next</a>
+                </li>
+            </ul>
+        </div>
     <div class="row">
         <table class="table">
             <thead class="table-primary">
@@ -29,18 +43,27 @@
             </thead>
             <tbody>
             <tr th:each="obj:${views}">
-                <td th:text="${obj.contract.id}"></td>
-                <td th:text="${obj.customer.name}"></td>
-                <td  th:text="${obj.employee.name}"></td>
-                <td th:text="${obj.service.name}"></td>
-                <td th:text="${obj.service.price}"></td>
-                <td th:text="${obj.contract.deposit}"></td>
+                <td th:text="${obj.contractId}"></td>
 
-                <td th:if="${obj.attachServiceName != ''}" th:text="${obj.attachServiceName}"></td>
-                <td class="text-danger" th:if="${obj.attachServiceName == ''}" th:text="${'không sử dụng'}"></td>
+                <td th:each="cus:${customers}" th:if="${cus.id == obj.customerId}" th:text="${cus.name}"></td>
 
-                <td th:text="${obj.attachServicePrice}"></td>
-                <td th:text="${obj.totalQuantity}"></td>
+                <td th:each="emp:${employees}" th:if="${emp.id == obj.employeeId}" th:text="${emp.name}"></td>
+
+                <td th:each="serv:${services}" th:if="${serv.id == obj.serviceId}" th:text="${serv.name}"></td>
+
+                <td th:text="${obj.servicePrice}"></td>
+
+                <td th:text="${obj.deposit}"></td>
+
+                <td th:if="${obj.attachService != null }" th:text="${obj.attachService}"></td>
+                <td class="text-danger" th:if="${obj.attachService == null }" th:text="${'Not Available'}"></td>
+
+                <td th:if="${obj.attachServicePrice != null }" th:text="${obj.attachServicePrice}"></td>
+                <td class="text-danger" th:if="${obj.attachServicePrice == null }" th:text="${'Not Available'}"></td>
+
+                <td th:if="${obj.totalQuantity != null}" th:text="${obj.totalQuantity}"></td>
+                <td class="text-danger" th:if="${obj.totalQuantity == null}" th:text="${'Not Available'}"></td>
+
                 <td th:text="${obj.totalMoney}"></td>
             </tr>
             </tbody>

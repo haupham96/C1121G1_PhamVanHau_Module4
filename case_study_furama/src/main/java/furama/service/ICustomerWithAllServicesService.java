@@ -10,11 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ICustomerWithAllServicesService {
-    Page<CustomerWithAllServices> findAll(Pageable pageable);
 
-    Page<CustomerServicesView> views (Pageable pageable);
+    Page<ICustomerServiceView> findAllPageCustomerServiceView(Pageable pageable);
 
-    List<ICustomerServiceView> findAll();
-
-    List<CustomerServiceView> findAllListCustomerServiceView();
 }

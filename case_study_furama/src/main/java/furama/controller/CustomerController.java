@@ -4,8 +4,6 @@ import furama.dto.customer_dto.CustomerDTO;
 import furama.model.customer.Customer;
 import furama.model.customer.CustomerType;
 import furama.model.customer_with_all_services.CustomerServiceView;
-import furama.model.customer_with_all_services.CustomerServicesView;
-import furama.model.customer_with_all_services.CustomerWithAllServices;
 import furama.model.customer_with_all_services.ICustomerServiceView;
 import furama.model.employee.Employee;
 import furama.model.service.Service;
@@ -14,6 +12,7 @@ import furama.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
@@ -26,11 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/customer")
@@ -49,7 +46,7 @@ public class CustomerController {
     IEmployeeService iEmployeeService;
 
     @Autowired
-    IUserService iUserService ;
+    IUserService iUserService;
 
     @GetMapping("")
     public String listCustomer(Principal principal, @RequestParam Optional<String> keyword, Model model, @PageableDefault(value = 5) Pageable pageable) {
@@ -67,7 +64,7 @@ public class CustomerController {
             model.addAttribute("userInfor", userInfor);
 
             furama.model.user.User userModel = this.iUserService.findByUserName(userLogin.getUsername());
-            model.addAttribute("userModel",userModel);
+            model.addAttribute("userModel", userModel);
         }
         return "/customer/list";
     }
@@ -83,7 +80,7 @@ public class CustomerController {
 
     @PostMapping("/create")
     public String createCustomer(@Validated @ModelAttribute CustomerDTO customerDTO, BindingResult bindingResult,
-                                 RedirectAttributes redirectAttributes,Model model) {
+                                 RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasFieldErrors()) {
             List<CustomerType> customerTypes = this.iCustomerService.findAllCustomerType();
             model.addAttribute("customerDTO", customerDTO);
@@ -143,18 +140,26 @@ public class CustomerController {
     @GetMapping("/use-services")
     public String showCustomerUseServices(Model model, Pageable pageable, Principal principal) {
 
-        List<ICustomerServiceView> views = this.iCustomerWithAllServicesService.findAll();
+        Page<ICustomerServiceView> pageICustomerServiceView = this.iCustomerWithAllServicesService.
+                findAllPageCustomerServiceView(PageRequest.of(pageable.getPageNumber(), 5));
 
-        List<CustomerServiceView> listCustomerServiceView = this.iCustomerWithAllServicesService.findAllListCustomerServiceView();
+        List<Customer> customers = this.iCustomerService.listCustomer();
+        List<Employee> employees = this.iEmployeeService.listEmployee();
+        List<Service> services = this.iFuramaService.listService();
+
+        model.addAttribute("customers", customers);
+        model.addAttribute("employees", employees);
+        model.addAttribute("services", services);
 
         if (principal != null) {
             User user = (User) ((Authentication) principal).getPrincipal();
             String userInfor = WebUtils.toString(user);
             model.addAttribute("userInfor", userInfor);
             furama.model.user.User userModel = this.iUserService.findByUserName(user.getUsername());
-            model.addAttribute("userModel",userModel);
+            model.addAttribute("userModel", userModel);
         }
-        model.addAttribute("views", listCustomerServiceView);
+        model.addAttribute("views", pageICustomerServiceView);
+
         return "/customer/customer-services-view";
     }
 

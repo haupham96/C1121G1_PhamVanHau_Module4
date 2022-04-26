@@ -20,16 +20,16 @@ public class CustomerServiceView {
 
     private String attachServiceName;
 
-    private Double attachServicePrice;
+    private String attachServicePrice;
 
-    private Integer totalQuantity;
+    private String totalQuantity;
 
     private String totalMoney;
 
     public CustomerServiceView() {
     }
 
-    public CustomerServiceView(Contract contract, Customer customer, Employee employee, Service service, String attachServiceName, Double attachServicePrice, Integer totalQuantity, String totalMoney) {
+    public CustomerServiceView(Contract contract, Customer customer, Employee employee, Service service, String attachServiceName, String attachServicePrice, String totalQuantity, String totalMoney) {
         this.contract = contract;
         this.customer = customer;
         this.employee = employee;
@@ -38,11 +38,5 @@ public class CustomerServiceView {
         this.attachServicePrice = attachServicePrice;
         this.totalQuantity = totalQuantity;
         this.totalMoney = totalMoney;
-    }
-
-    public String calculateTotalMoney() {
-        Double calculateTotalMoney = Double.parseDouble(this.service.getPrice()) - Double.parseDouble(this.contract.getDeposit()) + (this.attachServicePrice * this.totalQuantity);
-        String totalMoney = String.valueOf(calculateTotalMoney);
-        return totalMoney;
     }
 }

@@ -6,6 +6,8 @@ import furama.service.IContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContractService implements IContractService {
 
@@ -20,5 +22,10 @@ public class ContractService implements IContractService {
     @Override
     public Contract findById(Integer id) {
         return this.iContractRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Contract> findAll() {
+        return this.iContractRepository.findAll();
     }
 }

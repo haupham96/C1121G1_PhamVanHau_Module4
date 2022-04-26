@@ -6,8 +6,11 @@ import furama.model.customer.Customer;
 import furama.model.employee.Employee;
 import furama.model.service.Service;
 import furama.service.*;
+import furama.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -35,6 +39,21 @@ public class ContractController {
 
     @Autowired
     IUserService iUserService;
+
+    @GetMapping("")
+    public String listContract(Model model, Principal principal){
+        List<Contract> contracts = this.iContractService.findAll();
+        model.addAttribute("contracts",contracts);
+
+        if(principal != null){
+            User user = (User) ((Authentication)principal).getPrincipal();
+            String userInfor = WebUtils.toString(user);
+            furama.model.user.User userModel = this.iUserService.findByUserName(user.getUsername());
+            model.addAttribute("userInfor",userInfor);
+            model.addAttribute("userModel",userModel);
+        }
+        return "/contract/list";
+    }
 
     @GetMapping("/create")
     public String createForm(Model model){
@@ -78,8 +97,15 @@ public class ContractController {
     }
 
     @GetMapping("/view/{id}")
-    public String showContractDetail(@PathVariable Integer id,Model model){
+    public String showContractDetail(@PathVariable Integer id,Model model,Principal principal){
 
+        if(principal != null){
+            User user = (User) ((Authentication)principal).getPrincipal();
+            String userInfor = WebUtils.toString(user);
+            furama.model.user.User userModel = this.iUserService.findByUserName(user.getUsername());
+            model.addAttribute("userInfor",userInfor);
+            model.addAttribute("userModel",userModel);
+        }
         Contract contract = this.iContractService.findById(id);
         if(contract == null){
             return "/err-404";
