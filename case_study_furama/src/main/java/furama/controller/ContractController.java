@@ -42,82 +42,87 @@ public class ContractController {
     IUserService iUserService;
 
     @Autowired
-    IRoleUserService iRoleUserService ;
+    IRoleUserService iRoleUserService;
 
     @GetMapping("")
-    public String listContract(Model model, Principal principal){
+    public String listContract(Model model, Principal principal) {
         List<Contract> contracts = this.iContractService.findAll();
-        model.addAttribute("contracts",contracts);
+        model.addAttribute("contracts", contracts);
 
-        if(principal != null){
+        if (principal != null) {
 
-            User user = (User) ((Authentication)principal).getPrincipal();
+            User user = (User) ((Authentication) principal).getPrincipal();
             String userInfor = WebUtils.toString(user);
             furama.model.user.User userModel = this.iUserService.findByUserName(user.getUsername());
-            model.addAttribute("userInfor",userInfor);
-            model.addAttribute("userModel",userModel);
+            model.addAttribute("userInfor", userInfor);
+            model.addAttribute("userModel", userModel);
 //            List<RoleUser> roleUsers = this.iRoleUserService.findByUserName(user.getUsername());
         }
         return "/contract/list";
     }
 
     @GetMapping("/create")
-    public String createForm(Model model){
+    public String createForm(Model model) {
         List<Customer> customers = this.iCustomerService.listCustomer();
         List<Employee> employees = this.iEmployeeService.listEmployee();
         List<Service> services = this.iFuramaService.listService();
 
-        model.addAttribute("customers",customers);
-        model.addAttribute("employees",employees);
-        model.addAttribute("services",services);
+        model.addAttribute("customers", customers);
+        model.addAttribute("employees", employees);
+        model.addAttribute("services", services);
 
         ContractDTO contractDTO = new ContractDTO();
-        model.addAttribute("contractDTO",contractDTO);
+        model.addAttribute("contractDTO", contractDTO);
         return "/contract/create-contract";
     }
 
     @PostMapping("/create")
-    public String createContract(@Validated @ModelAttribute ContractDTO contractDTO , BindingResult bindingResult ,
-                                 Model model, RedirectAttributes redirectAttributes){
-        contractDTO.validate(contractDTO,bindingResult);
-        if(bindingResult.hasFieldErrors()){
+    public String createContract(@Validated @ModelAttribute ContractDTO contractDTO, BindingResult bindingResult,
+                                 Model model, RedirectAttributes redirectAttributes) {
+        contractDTO.validate(contractDTO, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
 
             List<Customer> customers = this.iCustomerService.listCustomer();
             List<Employee> employees = this.iEmployeeService.listEmployee();
             List<Service> services = this.iFuramaService.listService();
 
-            model.addAttribute("customers",customers);
-            model.addAttribute("employees",employees);
-            model.addAttribute("services",services);
+            model.addAttribute("customers", customers);
+            model.addAttribute("employees", employees);
+            model.addAttribute("services", services);
 
             return "/contract/create-contract";
         }
 
         Contract contract = new Contract();
-        BeanUtils.copyProperties(contractDTO,contract);
+        BeanUtils.copyProperties(contractDTO, contract);
         this.iContractService.save(contract);
 
-        redirectAttributes.addFlashAttribute("message","Create success new contract !");
+        redirectAttributes.addFlashAttribute("message", "Create success new contract !");
         return "redirect:/home";
 
     }
 
     @GetMapping("/view/{id}")
-    public String showContractDetail(@PathVariable Integer id,Model model,Principal principal){
+    public String showContractDetail(@PathVariable Integer id, Model model, Principal principal) {
 
-        if(principal != null){
-            User user = (User) ((Authentication)principal).getPrincipal();
+        if (principal != null) {
+            User user = (User) ((Authentication) principal).getPrincipal();
             String userInfor = WebUtils.toString(user);
             furama.model.user.User userModel = this.iUserService.findByUserName(user.getUsername());
-            model.addAttribute("userInfor",userInfor);
-            model.addAttribute("userModel",userModel);
+            model.addAttribute("userInfor", userInfor);
+            model.addAttribute("userModel", userModel);
         }
         Contract contract = this.iContractService.findById(id);
-        if(contract == null){
+        if (contract == null) {
             return "/err-404";
         }
-        model.addAttribute("contract",contract);
+        model.addAttribute("contract", contract);
         return "/contract/view-contract";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String goErr() {
+        return "err-404";
     }
 
 }

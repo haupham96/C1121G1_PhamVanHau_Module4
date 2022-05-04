@@ -1,0 +1,269 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/js/css_list/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/js/css_list/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/js/css_list/css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/js/css_list/css/style.css">
+
+    <title>List</title>
+    <style>
+        .btn-grad {
+            background-image: linear-gradient(to right, #DA22FF 0%, #9733EE 51%, #DA22FF 100%)
+        }
+
+        .btn-grad {
+            margin: 2px;
+            padding: 5px -35px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            box-shadow: 0 0 5px #eee;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .btn-grad:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-create {
+
+            background-image: linear-gradient(to right, #ECE9E6 0%, #FFFFFF 51%, #ECE9E6 100%);
+            margin: 10px;
+            padding: 15px 45px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            box-shadow: 0 0 5px #eee;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .btn-create:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+        .btn-create {
+            background-image: linear-gradient(to right, #00C9FF 0%, #92FE9D 51%, #00C9FF 100%)
+        }
+
+        .btn-create {
+            margin: 10px;
+            padding: 6px 18px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            box-shadow: 0 0 5px #eee;
+            border-radius: 10px;
+            display: block;
+            font-family: 'Montserrat', Helvetica, sans-serif;
+        }
+
+        .btn-create:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+        .navbar-gradient {
+            background-color: #4158D0;
+            background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+        }
+
+        .modal-body-gradient {
+            background-color: #4158D0;
+            background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+        }
+
+    </style>
+
+</head>
+<body>
+<nav style="border-bottom: whitesmoke solid 2px;" class="navbar navbar-gradient bg-primary ">
+    <div class="container-fluid">
+        <a style="color: white" class="navbar-brand">Customer Management</a>
+        <a class="btn-create" href="/demo/create">Create Customer</a>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn-grad btn btn-default" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="content">
+
+    <div class="container-fluid">
+        <h1 class="text-center text-light">LIST CUSTOMER</h1>
+        <div>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="btn btn-outline-light" th:if="${customers.hasPrevious()}"
+                       th:href="@{/demo(page=${customers.number - 1})}">Previous</a>
+                </li>
+                <li class="page-item"><a class="btn btn-oulint-light text-light" th:text="${customers.number + 1}"></a>
+                </li>
+                <li class="page-item"><a class="btn btn-oulint-light text-light" th:text="${customers.totalPages}"></a>
+                </li>
+                <li class="page-item">
+                    <a class="btn btn-outline-light" th:if="${customers.hasNext()}"
+                       th:href="@{/demo(page=${customers.number + 1})}">Next</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-striped custom-table">
+                <thead>
+                <tr>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Birthday</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Type</th>
+                    <th class="text-center" colspan="2">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr scope="row" th:each="customer,loop:${customers}">
+                    <td th:text="${loop.count}"></td>
+                    <td th:text="${customer.customerCode}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.birthday}"></td>
+                    <td th:if="${customer.gender == 0}" th:text="${'Male'}"></td>
+                    <td th:if="${customer.gender == 1}" th:text="${'FeMale'}"></td>
+                    <td th:text="${customer.idCard}"></td>
+                    <td th:text="${customer.phone}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td th:text="${customer.address}"></td>
+                    <td th:text="${customer.customerType.name}"></td>
+                    <td>
+                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none btn btn-outline-light" href="#">Delete</a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: 2px solid whitesmoke ">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Edit Customer</h5>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Customer Code</label>
+                        <input type="text" class="form-control">
+                        <p class="form-helper text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" class="form-control">
+                        <p class="form-helper text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Birthday</label>
+                        <input type="date" class="form-control">
+                        <p class="form-helper text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option value="0">Male</option>
+                            <option value="1">Female</option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <label>ID Number</label>
+                        <input type="text" class="form-control">
+                        <p class="form-helper text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone number</label>
+                        <input type="text" class="form-control">
+                        <p class="form-helper text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control">
+                        <p class="form-helper text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control">
+                        <p class="form-helper text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Type</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+                <div class="mb-2 d-flex justify-content-center p-2 pt-2 ">
+                    <button style="border: 0px" type="button" class="btn-grad col-sm-6"
+                            data-bs-dismiss="modal">Close
+                    </button>
+                    <button style="border: 0px" type="button" class="btn-grad col-sm-6">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/js/css_list/js/jquery-3.3.1.min.js"></script>
+<script src="/js/css_list/js/popper.min.js"></script>
+<script src="/js/css_list/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+</html>

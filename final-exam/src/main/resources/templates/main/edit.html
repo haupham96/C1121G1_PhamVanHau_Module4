@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+    <th:block th:replace="~{/layout::linkCDN}"></th:block>
+    <style th:replace="~{/layout::style}"></style>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+            integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <form method="post" th:object="${promotionDTO}">
+                <div class="modal-header">
+                    <h4 class="text-primary"> Edit Promotion</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" th:field="*{title}">
+                        <p class="form-helper text-danger" th:errors="*{title}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Start Time</label>
+                        <input type="date" class="form-control" th:field="*{startTime}">
+                        <p class="form-helper text-danger" th:errors="*{startTime}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>End Time</label>
+                        <input type="date" class="form-control" th:field="*{endTime}">
+                        <p class="form-helper text-danger" th:errors="*{endTime}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Promotion Price</label>
+                        <input type="text" class="form-control" th:field="*{promotionPrice}">
+                        <p class="form-helper text-danger" th:errors="*{promotionPrice}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Detail</label>
+                        <textarea class="form-control" th:field="*{detai}" cols="20" rows="10"></textarea>
+                        <p class="form-helper text-danger" th:errors="*{detai}"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/promotion" class="btn btn-dark">Cancel</a>
+                    <input type="submit" class="btn btn-info text-light" value="Edit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

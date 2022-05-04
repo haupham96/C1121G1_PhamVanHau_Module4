@@ -142,4 +142,9 @@ public class EmployeeController {
         redirectAttributes.addFlashAttribute("message","Delete Successful !");
         return "redirect:/employee";
     }
+
+    @ExceptionHandler(Exception.class)
+    public String goErr() {
+        return "err-404";
+    }
 }

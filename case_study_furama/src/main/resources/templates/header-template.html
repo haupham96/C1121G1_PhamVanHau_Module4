@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <th:block th:replace="~{/layout::linkBootStrap}"></th:block>
+    <style>
+        .bg-primary.bg-gradient
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">Customer Management</a>
+        <form class="d-flex">
+            <input class="form-control me-2 mt-1" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="container d-flex justify-content-center mt-2">
+    <button style="background-image: linear-gradient(to left,orange,orangered,#dc3545);border-radius: 7px;cursor: pointer;border-color: whitesmoke;color:white">
+        Button
+    </button>
+</div>
+</body>
+</html>

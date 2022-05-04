@@ -2,6 +2,7 @@ package furama.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,5 +25,9 @@ public class SecurityController {
         return "/security/authority-deny-access";
     }
 
+    @ExceptionHandler(Exception.class)
+    public String goErr() {
+        return "err-404";
+    }
 
 }

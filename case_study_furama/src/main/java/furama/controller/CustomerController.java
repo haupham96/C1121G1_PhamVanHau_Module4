@@ -163,4 +163,9 @@ public class CustomerController {
         return "/customer/customer-services-view";
     }
 
+    @ExceptionHandler(Exception.class)
+    public String goErr() {
+        return "err-404";
+    }
+
 }

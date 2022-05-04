@@ -86,4 +86,9 @@ public class ServiceController {
         return "redirect:/service";
     }
 
+    @ExceptionHandler(Exception.class)
+    public String goErr() {
+        return "err-404";
+    }
+
 }

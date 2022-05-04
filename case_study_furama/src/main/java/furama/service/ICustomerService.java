@@ -22,4 +22,6 @@ public interface ICustomerService {
     Page<Customer> searchByCustomerName(String s, Pageable pageable);
 
     List<Customer> listCustomer();
+
+    void deleteMultiple(List<String> iDString);
 }

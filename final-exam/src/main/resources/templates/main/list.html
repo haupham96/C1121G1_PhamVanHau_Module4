@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Promotion</title>
+    <th:block th:replace="~{/layout::linkCDN}"></th:block>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+            integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div th:fragment="navigationBar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+                    aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand text-light" href="#">Promotion Management</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-light btn btn-danger" aria-current="page" href="/promotion/create">Create
+                            Promotion</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <h1 class="text-primary">List Promotion</h1>
+    </div>
+    <div>
+        <div style="display: flex; justify-content: flex-start; flex-direction: column">
+            <form action="/promotion">
+                <div class="form-group">
+                    <label>Promotion Price</label>
+                    <input type="text" class="form-control" name="promotionPrice" th:value="${promotionPrice}">
+                </div>
+                <div class="form-group">
+                    <label>Start Day</label>
+                    <input type="date" class="form-control" name="startDay" th:value="${startDay}">
+                </div>
+                <div class="form-group">
+                    <label>End Day</label>
+                    <input type="date" class="form-control" name="endDay" th:value="${endDay}">
+                </div>
+                <div class="form-group mt-1">
+                    <input class="btn btn-primary text-light" type="submit" value="Search">
+                </div>
+
+            </form>
+        </div>
+        <br>
+    </div>
+    <br>
+
+    <div class="row">
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Promotion Price</th>
+                <th>Detail</th>
+                <th class="text-center" colspan="2">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="promotion:${promotions}">
+                <td th:text="${promotion.title}"></td>
+                <td th:text="${promotion.startTime}"></td>
+                <td th:text="${promotion.endTime}"></td>
+                <td th:text="${promotion.promotionPrice}"></td>
+                <td th:text="${promotion.detai}"></td>
+                <td>
+                    <a class="btn btn-primary text-center" th:href="@{/promotion/edit/{id}(id=${promotion.id})}">Edit</a>
+                </td>
+                <td class="d-flex justify-content-center">
+                    <button type="button" th:data-name="${promotion.title}" th:data-id="${promotion.id}"
+                            class="launchDeleteModal btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete this Promotion ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/promotion/delete" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="idDelete" name="idDelete">
+                    <p id="productName"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="deleteCustomer">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <h5 class="text-center text-danger" th:text="${message}" id="message"></h5>
+</div>
+</body>
+<script>
+
+    function showMessage() {
+        document.getElementById("message").innerText = "";
+    }
+
+    setTimeout(showMessage, 1500);
+
+    $(document).on('click', ".launchDeleteModal", function () {
+        let idDelete = $(this).attr('data-id');
+        let nameDelete = $(this).attr('data-name');
+
+        $("#productName").text(nameDelete);
+        $("#idDelete").val(idDelete);
+    });
+
+
+</script>
+</html>

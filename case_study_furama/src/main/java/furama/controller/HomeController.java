@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
@@ -43,5 +44,10 @@ public class HomeController {
     @GetMapping("/403")
     public String go403(){
         return "/err-403";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String goErr() {
+        return "err-404";
     }
 }

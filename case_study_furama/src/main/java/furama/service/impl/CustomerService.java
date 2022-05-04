@@ -56,4 +56,9 @@ public class CustomerService implements ICustomerService {
         return this.iCustomerRepository.findAll();
     }
 
+    @Override
+    public void deleteMultiple(List<String> iDString) {
+        this.iCustomerRepository.deleteMultipleId(iDString);
+    }
+
 }
